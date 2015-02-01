@@ -20,9 +20,9 @@ The first class should be called *ChangeMaker* and must contain the following me
   * *Cannot make change for negative cents.* (Or something similar)
 * Ignore all other arguments, if any. 
 * If the entered amount is valid, display the change required, one line per denomination. For example, the output for *java ChangeMaker 146* would look like this:
-  * *Quarters: 5  
-    Dimes: 2  
-    Nickels: 0  
+  * *Quarters: 5
+    Dimes: 2
+    Nickels: 0
     Pennies: 1*
     
 ### Strings
@@ -33,10 +33,10 @@ The second class should be called *StrungOut* and contain the following methods:
 * **public static boolean isPalindrome(String text):** returns true if the given string is a palindrome (valid palindromes: "racecar", "X", "33", "52725", "Mom").
 * **public static String evensOnly(String text):** returns only the characters with an even index as a new string. For example, "REHEARSALS" -> "RHASL", "A" -> "A", "hi" -> "h".
 * **public static String oddsOnly(String text)** returns only the characters with an odd index as a new string. For example, "REHEARSALS" -> "EERAS", "A" -> "", "hi" -> "i".
-* **public static void main(String[] args)** displays each of the above string methods applied to the string in (args[0]). For example, output for *java StrungOut TestString should look something like this:
-  * *Reverse: gnirtStseT  
-     Palindrome: false  
-     Evens: TsSrn  
+* **public static void main(String[] args)** displays each of the above string methods applied to the string in (args[0]). For example, output for *java StrungOut TestString* should look something like this:
+  * *Reverse: gnirtStseT
+     Palindrome: false
+     Evens: TsSrn
      Odds: ettig*
 * If the user does not supply any arguments, display the message: 
   * *Usage: java StrungOut \<some string>*
