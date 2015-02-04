@@ -15,12 +15,18 @@ public class ChangeMaker {
 	public static int[] getChange(int cents) {
 		int[] changeArray = new int[4];
 		changeArray[0] = getQuarters(cents);
+		cents %= 25;
 		changeArray[1] = getDimes(cents);
+		cents %= 10;
 		changeArray[2] = getNickels(cents);
+		cents %= 5;
 		changeArray[3] = getPennies(cents);
+		cents %= 1;
 				return changeArray;
-
+		
 	}
+
+	
 
 	public static void main(String args[]) {
 		try {
