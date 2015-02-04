@@ -26,7 +26,7 @@ public class ChangeMaker {
 		try {
 			int number = Integer.parseInt(args[0]);
 			if (number < 0) {
-				System.out.println("please enter a positive number");
+				System.out.println("Cannot make change for negative cents.");
 			} 
 			else {
 				int[] finalArray = getChange(number);
@@ -36,8 +36,11 @@ public class ChangeMaker {
 
 			} 
 		}
-		catch(Exception e) {
-			System.out.println("please enter an integer");
+		catch(NumberFormatException e) {
+			System.out.println("Supplied value is not an integer.");
+		}
+		catch(ArrayIndexOutOfBoundsException e) {
+			System.out.println("Usage: java ChangeMaker <amount in cents>");
 		}
 
 		
