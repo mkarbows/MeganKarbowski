@@ -36,11 +36,11 @@ public class ChangeMaker {
 			} 
 			else {
 				int[] finalArray = getChange(number);
-				for (int i = 0; i < 4; i++) {
-					System.out.println(finalArray[i]);
+				System.out.println("Quarters: " + finalArray[0]);
+				System.out.println("Dimes: " + finalArray[1]);
+				System.out.println("Nickels: " + finalArray[2]);
+				System.out.println("Pennies: " + finalArray[3]);
 				}
-
-			} 
 		}
 		catch(NumberFormatException e) {
 			System.out.println("Supplied value is not an integer.");
