@@ -1,15 +1,14 @@
 public class StrungOut {
 	public static String reverse(String text) {
-		return new StringBuilder(text).reverse().toString();
+		String reverseText = "";
+		for (int i = text.length(); i >= 0; i--) {
+			reverseText = reverseText + text.charAt(i);	
+		}
+		return reverseText;
 	}
 	public static boolean isPalindrome(String text) {
-		int n = text.length();
-		for (int i = 0; i < (n/2) + 1; ++i) {
-			if (text.charAt(i) != text.charAt(n - i - 1)) {
-				return false;
-			}
-		}
-		return true;
+		String reversed = reverse(text);
+		return reversed.equals(text);
 	}
 	public static String evensOnly(String text) {
 		String evenText = "";
@@ -17,9 +16,7 @@ public class StrungOut {
 			evenText = evenText + text.charAt(i);
 			}
 		return evenText;
-		}
-
-	
+	}
 	public static String oddsOnly(String text) {
 		String oddText = "";
 		for (int i = 1; i < text.length(); i += 2) {
@@ -27,4 +24,15 @@ public class StrungOut {
 		}
 		return oddText;
 	}
+	public static void main(String[] args) {
+		if (args.length == 0) {
+			System.out.println("Usage: java StrungOut <some string>");
+		}
+		else {
+			System.out.println("Reverse: " + reverse(args[0]));
+			System.out.println("Palidrome: " + isPalindrome(args[0]));
+			System.out.println("Evens: " + evensOnly(args[0]));
+			System.out.println("Odds: " + oddsOnly(args[0]));
+		}
+	}	
 }
