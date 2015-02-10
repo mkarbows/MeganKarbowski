@@ -14,7 +14,7 @@ public class StrungOut {
 		String evenText = "";
 		for (int i = 0; i < text.length(); i += 2) {
 			evenText = evenText + text.charAt(i);
-			}
+		}
 		return evenText;
 	}
 	public static String oddsOnly(String text) {
