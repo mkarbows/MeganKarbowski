@@ -1,5 +1,4 @@
 public class ChangeMaker {
-
 	public static int getQuarters(int cents) {
 		return cents / 25; 
 	}
@@ -22,12 +21,8 @@ public class ChangeMaker {
 		cents %= 5;
 		changeArray[3] = getPennies(cents);
 		cents %= 1;
-			return changeArray;
-		
+			return changeArray;	
 	}
-
-	
-
 	public static void main(String args[]) {
 		try {
 			int number = Integer.parseInt(args[0]);
