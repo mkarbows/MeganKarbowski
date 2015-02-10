@@ -2,7 +2,7 @@ public class ChangeMaker {
 
 	public static int getQuarters(int cents) {
 		return cents / 25; 
-		}
+	}
 	public static int getDimes(int cents) {
 		return cents / 10;
 	}
@@ -22,7 +22,7 @@ public class ChangeMaker {
 		cents %= 5;
 		changeArray[3] = getPennies(cents);
 		cents %= 1;
-				return changeArray;
+			return changeArray;
 		
 	}
 
@@ -40,7 +40,7 @@ public class ChangeMaker {
 				System.out.println("Dimes: " + finalArray[1]);
 				System.out.println("Nickels: " + finalArray[2]);
 				System.out.println("Pennies: " + finalArray[3]);
-				}
+			}
 		}
 		catch(NumberFormatException e) {
 			System.out.println("Supplied value is not an integer.");
@@ -48,7 +48,5 @@ public class ChangeMaker {
 		catch(ArrayIndexOutOfBoundsException e) {
 			System.out.println("Usage: java ChangeMaker <amount in cents>");
 		}
-
-		
 	}
 }
