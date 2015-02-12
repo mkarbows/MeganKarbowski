@@ -1,5 +1,5 @@
 # Video Poker
-## Due 02/24/2015
+## Due 02/26/2015
 
 For this assignment, you'll be working with objects by creating your very own
 text-based command line video poker game. A lot of the code has been stubbed out
