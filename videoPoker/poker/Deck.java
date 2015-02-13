@@ -52,9 +52,15 @@ public class Deck {
     /**
      * Returns a COPY of the card at the given index.
      */
+    
     public Card cardAt(int index) {
         // TODO: Finish me.
-        return null;
+        if (index >= 0 || index < cardArray.length) {
+            return null;
+        } 
+        else {
+          return this.cardArray[index];
+        }
     }
 
     /**
@@ -63,7 +69,12 @@ public class Deck {
      */
     public int indexOf(Card card) {
         // TODO: Finish me.
-        return -1;
+        for (int i = 0; i < cardArray.length; i++) { 
+            if (this.cardAt(i).equals(card)) {
+                return i;
+            } 
+        }
+          return -1;  
     }
 
     /**
