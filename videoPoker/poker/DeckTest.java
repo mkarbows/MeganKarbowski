@@ -18,17 +18,22 @@ class DeckTest {
             } else {
                 System.out.println("false: method does not return the appropriate type");
             }
-            System.out.println();
             int i = 0;
             for (Suit s: Suit.values()) {
                 for (Rank r: Rank.values()) {
-                    System.out.println("Tests #" + (i+2));
-                    System.out.println("Suit test: " + deck.cardAt(i).getSuit().equals(s));
-                    System.out.println("Rank test: " + deck.cardAt(i).getRank().equals(r));
-                    System.out.println();
+                    if(!deck.cardAt(i).getSuit().equals(s)){
+                        System.out.println("Test #2" + '\n' + "false");
+                        return;
+                    }
+                    if(!deck.cardAt(i).getRank().equals(r)){
+                        System.out.println("Test #2" + '\n' + "false");
+                        return;
+                    }
                     i++;
                 }
             }
+            System.out.println("Test #2: " + '\n' + "true");
+            System.out.println();
         } catch (Exception e) {
             System.out.println("false: Exception");
         }
@@ -44,12 +49,10 @@ class DeckTest {
             Card card1 = new Card(rankValues[0], suitValues[0]);
             System.out.println("Test #1");
             System.out.println(deck.indexOf(card1) == 0);
-            System.out.println();
 
             Card card2 = new Card(rankValues[2], suitValues[2]);
             System.out.println("Test #2");
             System.out.println(deck.indexOf(card2) == 28);
-            System.out.println();
 
             Card card3 = new Card(rankValues[10], suitValues[3]);
             System.out.println("Test #3");
@@ -74,10 +77,8 @@ class DeckTest {
                 }
             }
             System.out.println(shuffledCards % 2 == 0);
-            System.out.println();
 
-            System.out.println("Test #2");
-            System.out.println("This test expects at least two cards to be swapped.");
+            System.out.println("Test #2 (which assumes atleast two cards were swapped)");
             System.out.println(shuffledCards > 0);
             System.out.println();
         } catch (Exception e) {
@@ -92,11 +93,13 @@ class DeckTest {
             Deck cutDeck = new Deck();
             cutDeck.cut();
             for (int i = 0; i < 52; i++) {
-                System.out.println("Test #" + (i+1));
-                System.out.println(uncutDeck.cardAt(i).equals(cutDeck.cardAt((i+26)%52)));
-                System.out.println();
+                if (!uncutDeck.cardAt(i).equals(cutDeck.cardAt((i+26)%52))) {
+                    System.out.println("Test #1" + '\n' + "false");
+                    return;
+                }
             }
-
+            System.out.println("Test #1" + '\n' + "true");
+            System.out.println();
         } catch (Exception e){
             System.out.println("false: Exception");
         }

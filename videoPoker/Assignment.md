@@ -93,3 +93,7 @@ etc. etc. Here's how the game's flow should work:
     * Quit (and thank them politely for playing—we're not animals) if they enter
     "n", "N", or "no".
     * Ask again if they give you gibberish.
+
+**DON'T FORGET TO COMMIT AT THE END OF CLASS (or at least, at the end of the day in which we had class).**
+
+You're also encouraged to commit after every milestone (finish a method, class, stubs, etc.).
