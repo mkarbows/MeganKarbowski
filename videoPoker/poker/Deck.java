@@ -77,6 +77,7 @@ public class Deck {
           return -1;  
     }
 
+
     /**
      * Rearranges the cards randomly.
      * I recommend the in-place (Durstenfield) version of the Fisher-Yates shuffle.
@@ -84,8 +85,19 @@ public class Deck {
      * http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_.22inside-out.22_algorithm
      * Also a random number of "riffle" shuffles works, too.
      */
+
+    public void swap(int i, int random) {
+        Card cardToSwap = this.cardArray[i];
+        this.cardArray[i] = this.cardArray[random];
+        this.cardArray[random] = cardToSwap;
+    }
+
     public void shuffle() {
         // TODO: Finish me.
+        for (int i = 0; i < cardArray.length; i++) {
+            int random = (int)(Math.random() * 51);
+            this.swap(i, random);
+        }
     }
 
     /**
