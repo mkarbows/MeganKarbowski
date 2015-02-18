@@ -55,7 +55,7 @@ public class Deck {
     
     public Card cardAt(int index) {
         // TODO: Finish me.
-        if (index >= 0 || index < cardArray.length) {
+        if (index <= 0 || index < cardArray.length) {
             return null;
         } 
         else {
@@ -86,17 +86,17 @@ public class Deck {
      * Also a random number of "riffle" shuffles works, too.
      */
 
-    public void swap(int i, int random) {
+    public void swap(int i, int j) {
         Card cardToSwap = this.cardArray[i];
-        this.cardArray[i] = this.cardArray[random];
-        this.cardArray[random] = cardToSwap;
+        this.cardArray[i] = this.cardArray[j];
+        this.cardArray[j] = cardToSwap;
     }
 
     public void shuffle() {
         // TODO: Finish me.
         for (int i = 0; i < cardArray.length; i++) {
-            int random = (int)(Math.random() * 51);
-            this.swap(i, random);
+            int j = (int)(Math.random() * 51);
+            this.swap(i, j);
         }
     }
 
@@ -105,6 +105,9 @@ public class Deck {
      */
     public void cut() {
         // TODO: Finish me.
+        for (int i = 0; i < cardArray.length / 2; i++) {
+            this.swap(i, i + 26);
+        }
     }
 
     @Override
