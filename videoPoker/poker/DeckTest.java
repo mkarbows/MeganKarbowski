@@ -1,109 +1,124 @@
 package poker;
 
-class DeckTest {
-    public static void main(String[] args){
-        cardAtTest();
-        indexOfTest();
-        shuffleTest();
-        cutTest();
+/**
+ * Represents a standard 52-card deck. Mostly just a wrapper around
+ * an array of Cards.
+ */
+public class Deck {
+
+    /**
+     * Right now, this Deck only handles 52 cards, but in the future,
+     * maybe functionality for jokers could be added.
+     */
+    private final int DECK_SIZE = 52;
+    private Card[] cardArray = new Card[DECK_SIZE];
+
+    /**
+     * Constructs a deck with all the cards in order of rank.
+     */
+    public Deck() {
+        this(0);
     }
 
-    public static void cardAtTest() {
-        System.out.println("Tests for cardAt():");
-        try {
-            System.out.println("Test #1");
-            Deck deck = new Deck();
-            if (deck.cardAt(0) instanceof Card){
-                System.out.println("true");
-            } else {
-                System.out.println("false: method does not return the appropriate type");
+    /**
+     * Constructs a deck and shuffles it the given amount of times.
+     */
+    public Deck(int numberOfShuffles) {
+        this(numberOfShuffles, false);
+    }
+
+    /**
+     * Constructs a deck with the given number of shuffles and
+     * cuts it afterwards if cut is true.
+     */
+    public Deck(int numberOfShuffles, boolean cut) {
+        for (Suit suit : Suit.values()) {
+            for (Rank rank : Rank.values()) {
+                int index = rank.ordinal()
+                        + (suit.ordinal() * Rank.values().length);
+                cardArray[index] = new Card(rank, suit);
             }
-            int i = 0;
-            for (Suit s: Suit.values()) {
-                for (Rank r: Rank.values()) {
-                    if(!deck.cardAt(i).getSuit().equals(s)){
-                        System.out.println("Test #2" + '\n' + "false");
-                        return;
-                    }
-                    if(!deck.cardAt(i).getRank().equals(r)){
-                        System.out.println("Test #2" + '\n' + "false");
-                        return;
-                    }
-                    i++;
-                }
-            }
-            System.out.println("Test #2: " + '\n' + "true");
-            System.out.println();
-        } catch (Exception e) {
-            System.out.println("false: Exception");
+        }
+
+        for (int i = 0; i < numberOfShuffles; i++) {
+            shuffle();
+        }
+
+        if (cut) {
+            this.cut();
         }
     }
 
-    public static void indexOfTest() {
-        System.out.println("Tests for indexOf():");
-        try {
-            Rank[] rankValues = Rank.values();
-            Suit[] suitValues = Suit.values();
-            Deck deck = new Deck();
+    /**
+     * Returns a COPY of the card at the given index.
+     */
+    
+    public Card cardAt(int index) {
+        // TODO: Finish me.
 
-            Card card1 = new Card(rankValues[0], suitValues[0]);
-            System.out.println("Test #1");
-            System.out.println(deck.indexOf(card1) == 0);
-
-            Card card2 = new Card(rankValues[2], suitValues[2]);
-            System.out.println("Test #2");
-            System.out.println(deck.indexOf(card2) == 28);
-
-            Card card3 = new Card(rankValues[10], suitValues[3]);
-            System.out.println("Test #3");
-            System.out.println(deck.indexOf(card3) == 49);
-            System.out.println();
-        } catch (Exception e) {
-            System.out.println("false: Exception");
+        if (index < 0 || index > cardArray.length) {
+            return null;
+        } 
+        else {
+          Card oldCard = this.cardArray[index];
+          Card newCard = new Card(oldCard.getRank(), oldCard.getSuit());
+          return newCard;
         }
     }
 
-    public static void shuffleTest() {
-        System.out.println("Tests for shuffleTest():");
-        try {
-            System.out.println("Test #1");
-            Deck sortedDeck = new Deck();
-            Deck shuffledDeck = new Deck();
-            shuffledDeck.shuffle();
-            int shuffledCards = 0;
-            for (int i = 0; i < 52; i++){
-                if (!sortedDeck.cardAt(i).equals(shuffledDeck.cardAt(i))){
-                    shuffledCards++;
-                }
-            }
-            System.out.println(shuffledCards % 2 == 0);
-
-            System.out.println("Test #2 (which assumes atleast two cards were swapped)");
-            System.out.println(shuffledCards > 0);
-            System.out.println();
-        } catch (Exception e) {
-            System.out.println("false: Exception");
+    /**
+     * Returns the index of the given card or -1 if it doesn't exist.
+     * Theoretically it should never return -1 but in practice, shit happens...
+     */
+    public int indexOf(Card card) {
+        // TODO: Finish me.
+        for (int i = 0; i < cardArray.length; i++) { 
+            if (this.cardAt(i).equals(card)) {
+                return i;
+            } 
         }
-    }
-
-    public static void cutTest() {
-        System.out.println("Tests for cutTest():");
-        try {
-            Deck uncutDeck = new Deck();
-            Deck cutDeck = new Deck();
-            cutDeck.cut();
-            for (int i = 0; i < 52; i++) {
-                if (!uncutDeck.cardAt(i).equals(cutDeck.cardAt((i+26)%52))) {
-                    System.out.println("Test #1" + '\n' + "false");
-                    return;
-                }
-            }
-            System.out.println("Test #1" + '\n' + "true");
-            System.out.println();
-        } catch (Exception e){
-            System.out.println("false: Exception");
-        }
+          return -1;  
     }
 
 
+    /**
+     * Rearranges the cards randomly.
+     * I recommend the in-place (Durstenfield) version of the Fisher-Yates shuffle.
+     * Check here to see what that gibberish means:
+     * http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_.22inside-out.22_algorithm
+     * Also a random number of "riffle" shuffles works, too.
+     */
+
+    public void swap(int i, int j) {
+        Card cardToSwap = this.cardArray[i];
+        this.cardArray[i] = this.cardArray[j];
+        this.cardArray[j] = cardToSwap;
+    }
+
+    public void shuffle() {
+        // TODO: Finish me.
+        for (int i = 0; i < cardArray.length; i++) {
+            int j = (int)(Math.random() * 51);
+            this.swap(i, j);
+        }
+    }
+
+    /**
+     * Takes the top half of the deck and puts it on the bottom.
+     */
+    public void cut() {
+        // TODO: Finish me.
+        for (int i = 0; i < cardArray.length / 2; i++) {
+            this.swap(i, i + 26);
+        }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder("");
+        for (Card card : cardArray) {
+            result.append(", " + card.toString());
+        }
+        return result.append(" ]").toString().replaceFirst(",", "[");
+    }
 }
