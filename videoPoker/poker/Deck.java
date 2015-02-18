@@ -55,11 +55,14 @@ public class Deck {
     
     public Card cardAt(int index) {
         // TODO: Finish me.
-        if (index <= 0 || index < cardArray.length) {
+
+        if (index < 0 || index > cardArray.length) {
             return null;
         } 
         else {
-          return this.cardArray[index];
+          Card oldCard = this.cardArray[index];
+          Card newCard = new Card(oldCard.getRank(), oldCard.getSuit());
+          return newCard;
         }
     }
 
