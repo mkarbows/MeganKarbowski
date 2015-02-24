@@ -72,8 +72,7 @@ public class FiveCardHand {
         if (index >= 0 && index < HAND_SIZE) {
             // TODO: Finish me.
             Card oldCard = this.hand[index];
-            Card newCard = new Card(oldCard.getRank(), oldCard.getSuit());
-            return null;
+            return oldCard;
         } else {
             throw new IllegalArgumentException(
                     "No card at the given index: " + index);
