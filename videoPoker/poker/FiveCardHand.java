@@ -56,6 +56,8 @@ public class FiveCardHand {
     public void setCard(int index, Card card) {
         if (index < HAND_SIZE && index >= 0) {
             // TODO: Finish me.
+            this.hand[index] = card;
+            this.setOrdered();
         } else {
             throw new IllegalArgumentException(
                     "No card at the given index: " + index);
