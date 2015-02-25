@@ -100,7 +100,6 @@ public class FiveCardHand {
      * Returns true if the hand has two pairs.
      */
     public boolean containsTwoPair() {
-        // TODO: Finish me.
         return this.ordered[0].getValue() == this.ordered[1].getValue() && this.ordered[1].getValue() == this.ordered[2].getValue() ||
             this.ordered[1].getValue() == this.ordered[2].getValue() && this.ordered[3].getValue() == this.ordered[4].getValue() ||
             this.ordered[0].getValue() == this.ordered[1].getValue() && this.ordered[3].getValue() == this.ordered[3].getValue();
@@ -110,7 +109,6 @@ public class FiveCardHand {
      * Returns true if the hand contains at least three of the same card.
      */
     public boolean containsThreeOfAKind() {
-        // TODO: Finish me.
         return this.ordered[0].getValue() == this.ordered[1].getValue() && this.ordered[1].getValue() == this.ordered[2].getValue() ||
             this.ordered[1].getValue() == this.ordered[2].getValue() && this.ordered[2].getValue() == this.ordered[3].getValue() ||
             this.ordered[2].getValue() == this.ordered[3].getValue() && this.ordered[3].getValue() == this.ordered[4].getValue();
@@ -121,7 +119,6 @@ public class FiveCardHand {
      * Remember, A-2-3-4-5 and 10-J-Q-K-A also count.
      */
     public boolean containsStraight() {
-        // TODO: Finish me.
         for (int i = 0; i < hand.length - 1; i++) {
             if (this.ordered[i].getValue() != this.ordered[i+1].getValue() - 1 && 
                 (i != 3 || this.ordered[i].getRank() != Rank.FIVE || this.ordered[i+1].getRank() != Rank.ACE)) {
@@ -135,8 +132,12 @@ public class FiveCardHand {
      * Returns true if all five cards have the same suit.
      */
     public boolean containsFlush() {
-        // TODO: Finish me.
-        return false;
+        for (int i = 0; i < hand.length - 1; i++) {
+            if (this.ordered[i].getSuit() != this.ordered[i+1].getSuit()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -146,7 +147,10 @@ public class FiveCardHand {
      */
     public boolean containsFullHouse() {
         // TODO: Finish me.
-        return false;
+        return this.ordered[0].getRank() == this.ordered[1].getRank() && this.ordered[1].getRank() == this.ordered[2].getRank() &&
+                this.ordered[3].getRank() == this.ordered[4].getRank() ||
+                this.ordered[0].getRank() == this.ordered[1].getRank() && this.ordered[2].getRank() == this.ordered[3].getRank() && 
+                this.ordered[3].getRank() == this.ordered[4].getRank();
     }
 
     /**
