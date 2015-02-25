@@ -19,7 +19,7 @@ public class FiveCardHand {
     /**
      * Represents the hand, but ordered from lowest rank to highest.
      */
-    private Card[] ordered;
+    public Card[] ordered;
 
     /**
      * Constructs a five card hand.
@@ -71,8 +71,8 @@ public class FiveCardHand {
     public Card getCard(int index) {
         if (index >= 0 && index < HAND_SIZE) {
             // TODO: Finish me.
-            Card oldCard = this.hand[index];
-            return oldCard;
+            Card c = this.hand[index];
+            return c;
         } else {
             throw new IllegalArgumentException(
                     "No card at the given index: " + index);
@@ -91,16 +91,19 @@ public class FiveCardHand {
      * Returns true if the hand has at least one pair (two of the same card).
      */
     public boolean containsPair() {
-        // TODO: Finish me.
-        return false;
+        return this.ordered[0].getValue() == this.ordered[1].getValue() ||
+            this.ordered[1].getValue() == this.ordered[2].getValue() ||
+            this.ordered[2].getValue() == this.ordered[3].getValue() ||
+            this.ordered[3].getValue() == this.ordered[4].getValue(); 
     }
-
     /**
      * Returns true if the hand has two pairs.
      */
     public boolean containsTwoPair() {
         // TODO: Finish me.
-        return false;
+        return this.ordered[0].getValue() == this.ordered[1].getValue() && this.ordered[1].getValue() == this.ordered[2].getValue() ||
+            this.ordered[1].getValue() == this.ordered[2].getValue() && this.ordered[3].getValue() == this.ordered[4].getValue() ||
+            this.ordered[0].getValue() == this.ordered[1].getValue() && this.ordered[3].getValue() == this.ordered[3].getValue();
     }
 
     /**
@@ -108,7 +111,9 @@ public class FiveCardHand {
      */
     public boolean containsThreeOfAKind() {
         // TODO: Finish me.
-        return false;
+        return this.ordered[0].getValue() == this.ordered[1].getValue() == this.ordered[2].getValue() ||
+            this.ordered[1].getValue() == this.ordered[2].getValue() == this.ordered[3].getValue() ||
+            this.ordered[2].getValue() == this.ordered[3].getValue() == this.ordered[4].getValue();
     }
 
     /**
@@ -161,4 +166,12 @@ public class FiveCardHand {
                 + "  " + hand[2].toString() + "  " + hand[3].toString()
                 + "  " + hand[4].toString() + " ]";
     }
+
+    public String orderedString() {
+        Card [] oh = this.ordered;
+        return "[ " + oh[0].toString() + "  " + oh[1].toString()
+                + "  " + oh[2].toString() + "  " + oh[3].toString()
+                + "  " + oh[4].toString() + " ]";
+    }
+
 }
