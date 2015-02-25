@@ -157,7 +157,6 @@ public class FiveCardHand {
      * rank.
      */
     public boolean containsFourOfAKind() {
-        // TODO: Finish me.
         return this.ordered[0].getRank() == this.ordered[1].getRank() && this.ordered[1].getRank() == this.ordered[2].getRank() &&
                 this.ordered[2].getRank() == this.ordered[3].getRank() ||
                 this.ordered[1].getRank() == this.ordered[2].getRank() && this.ordered[2].getRank() == this.ordered[3].getRank() &&
@@ -168,8 +167,7 @@ public class FiveCardHand {
      * Returns true if the hand contains both a straight and a flush.
      */
     public boolean containsStraightFlush() {
-        // TODO: Finish me.
-        return false;
+        return containsStraight() && containsFlush();
     }
 
     @Override
