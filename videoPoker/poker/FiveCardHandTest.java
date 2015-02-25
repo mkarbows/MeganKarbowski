@@ -9,6 +9,7 @@ public class FiveCardHandTest {
         attempts = 0;
         successes = 0;
 
+        test_setCardAndGetCard();
         test_containsPair();
         test_containsTwoPair();
         test_containsThreeOfAKind();
@@ -33,6 +34,56 @@ public class FiveCardHandTest {
         displaySuccessIfTrue(false);
     }
 
+    private static void test_setCardAndGetCard() {
+        System.out.println("Testing getCard and setCard...");
+        FiveCardHand hand = new FiveCardHand(new Card[] {
+            new Card(Rank.ACE, Suit.CLUBS),
+            new Card(Rank.DEUCE, Suit.CLUBS),
+            new Card(Rank.FIVE, Suit.SPADES),
+            new Card(Rank.FOUR, Suit.DIAMONDS),
+            new Card(Rank.JACK, Suit.HEARTS)
+        });
+
+        try {
+            displaySuccessIfTrue(hand.getCard(0).equals(new Card(Rank.ACE, Suit.CLUBS)));
+        } catch(Exception exc) {
+            displayFailure();
+            exc.printStackTrace();
+        }
+
+        try {
+            displaySuccessIfTrue(hand.getCard(4).equals(new Card(Rank.JACK, Suit.HEARTS)));
+        } catch(Exception exc) {
+            displayFailure();
+            exc.printStackTrace();
+        }
+
+        try {
+            displaySuccessIfTrue(hand.getCard(4).equals(new Card(Rank.JACK, Suit.HEARTS)));
+        } catch(Exception exc) {
+            displayFailure();
+            exc.printStackTrace();
+        }
+
+        try {
+            hand.setCard(2, new Card(Rank.JACK, Suit.SPADES));
+            displaySuccessIfTrue(hand.getCard(2).equals(new Card(Rank.JACK, Suit.SPADES)));
+        } catch(Exception exc) {
+            displayFailure();
+            exc.printStackTrace();
+        }
+
+        try {
+            Card test = hand.getCard(1);
+            test = new Card(Rank.FIVE, Suit.SPADES);
+            displaySuccessIfTrue(hand.getCard(1).equals(new Card(Rank.DEUCE, Suit.CLUBS)));
+        } catch(Exception exc) {
+            displayFailure();
+            exc.printStackTrace();
+        }
+        System.out.println();
+    }
+
     private static void test_containsPair() {
         System.out.println("Testing containsPair...");
         FiveCardHand hand = new FiveCardHand(new Card[] {
@@ -47,6 +98,7 @@ public class FiveCardHandTest {
             displaySuccessIfTrue(!hand.containsPair());
         } catch(Exception exc) {
             displayFailure();
+            exc.printStackTrace();
         }
 
 
@@ -54,6 +106,38 @@ public class FiveCardHandTest {
         try {
             displaySuccessIfTrue(hand.containsPair());
         } catch(Exception exc) {
+            exc.printStackTrace();
+            displayFailure();
+        }
+
+        hand = new FiveCardHand(new Card[] {
+            new Card(Rank.DEUCE, Suit.CLUBS),
+            new Card(Rank.FOUR, Suit.CLUBS),
+            new Card(Rank.DEUCE, Suit.SPADES),
+            new Card(Rank.KING, Suit.DIAMONDS),
+            new Card(Rank.JACK, Suit.HEARTS)
+        });
+
+        try {
+            displaySuccessIfTrue(hand.containsPair());
+        } catch(Exception exc) {
+            exc.printStackTrace();
+            displayFailure();
+        }
+
+        hand.setCard(2, new Card(Rank.JACK, Suit.SPADES));
+        try {
+            displaySuccessIfTrue(hand.containsPair());
+        } catch(Exception exc) {
+            exc.printStackTrace();
+            displayFailure();
+        }
+
+        hand.setCard(2, new Card(Rank.SEVEN, Suit.SPADES));
+        try {
+            displaySuccessIfTrue(!hand.containsPair());
+        } catch(Exception exc) {
+            exc.printStackTrace();
             displayFailure();
         }
         System.out.println();
@@ -72,14 +156,54 @@ public class FiveCardHandTest {
         try {
             displaySuccessIfTrue(!hand.containsTwoPair());
         } catch(Exception exc) {
+            exc.printStackTrace();
             displayFailure();
         }
-
 
         hand.setCard(2, new Card(Rank.JACK, Suit.SPADES));
         try {
             displaySuccessIfTrue(hand.containsTwoPair());
         } catch(Exception exc) {
+            exc.printStackTrace();
+            displayFailure();
+        }
+
+        hand = new FiveCardHand(new Card[] {
+            new Card(Rank.DEUCE, Suit.CLUBS),
+            new Card(Rank.SEVEN, Suit.SPADES),
+            new Card(Rank.FIVE, Suit.SPADES),
+            new Card(Rank.QUEEN, Suit.DIAMONDS),
+            new Card(Rank.JACK, Suit.HEARTS)
+        });
+
+        try {
+            displaySuccessIfTrue(!hand.containsTwoPair());
+        } catch(Exception exc) {
+            exc.printStackTrace();
+            displayFailure();
+        }
+
+        hand.setCard(2, new Card(Rank.JACK, Suit.SPADES));
+        hand.setCard(3, new Card(Rank.DEUCE, Suit.SPADES));
+        try {
+            displaySuccessIfTrue(hand.containsTwoPair());
+        } catch(Exception exc) {
+            exc.printStackTrace();
+            displayFailure();
+        }
+
+        hand = new FiveCardHand(new Card[] {
+            new Card(Rank.THREE, Suit.CLUBS),
+            new Card(Rank.THREE, Suit.SPADES),
+            new Card(Rank.QUEEN, Suit.SPADES),
+            new Card(Rank.QUEEN, Suit.DIAMONDS),
+            new Card(Rank.FOUR, Suit.HEARTS)
+        });
+
+        try {
+            displaySuccessIfTrue(hand.containsTwoPair());
+        } catch(Exception exc) {
+            exc.printStackTrace();
             displayFailure();
         }
         System.out.println();
@@ -98,16 +222,50 @@ public class FiveCardHandTest {
         try {
             displaySuccessIfTrue(!hand.containsThreeOfAKind());
         } catch(Exception exc) {
+            exc.printStackTrace();
             displayFailure();
         }
-
 
         hand.setCard(4, new Card(Rank.DEUCE, Suit.CLUBS));
         try {
             displaySuccessIfTrue(hand.containsThreeOfAKind());
         } catch(Exception exc) {
+            exc.printStackTrace();
             displayFailure();
         }
+
+        hand = new FiveCardHand(new Card[] {
+            new Card(Rank.THREE, Suit.CLUBS),
+            new Card(Rank.SEVEN, Suit.CLUBS),
+            new Card(Rank.SIX, Suit.SPADES),
+            new Card(Rank.QUEEN, Suit.DIAMONDS),
+            new Card(Rank.JACK, Suit.HEARTS)
+        });
+
+        try {
+            displaySuccessIfTrue(!hand.containsThreeOfAKind());
+        } catch(Exception exc) {
+            exc.printStackTrace();
+            displayFailure();
+        }
+
+        hand.setCard(1, new Card(Rank.SIX, Suit.CLUBS));
+        hand.setCard(4, new Card(Rank.SIX, Suit.HEARTS));
+        try {
+            displaySuccessIfTrue(hand.containsThreeOfAKind());
+        } catch(Exception exc) {
+            exc.printStackTrace();
+            displayFailure();
+        }
+
+        hand.setCard(3, new Card(Rank.FOUR, Suit.HEARTS));
+        try {
+            displaySuccessIfTrue(hand.containsThreeOfAKind());
+        } catch(Exception exc) {
+            exc.printStackTrace();
+            displayFailure();
+        }
+
         System.out.println();
     }
 
@@ -124,6 +282,7 @@ public class FiveCardHandTest {
         try {
             displaySuccessIfTrue(!hand.containsStraight());
         } catch(Exception exc) {
+            exc.printStackTrace();
             displayFailure();
         }
 
@@ -132,6 +291,7 @@ public class FiveCardHandTest {
         try {
             displaySuccessIfTrue(hand.containsStraight());
         } catch(Exception exc) {
+            exc.printStackTrace();
             displayFailure();
         }
 
@@ -146,6 +306,7 @@ public class FiveCardHandTest {
         try {
             displaySuccessIfTrue(hand.containsStraight());
         } catch(Exception exc) {
+            exc.printStackTrace();
             displayFailure();
         }
 
@@ -160,6 +321,7 @@ public class FiveCardHandTest {
         try {
             displaySuccessIfTrue(hand.containsStraight());
         } catch(Exception exc) {
+            exc.printStackTrace();
             displayFailure();
         }
 
@@ -167,6 +329,7 @@ public class FiveCardHandTest {
         try {
             displaySuccessIfTrue(!hand.containsStraight());
         } catch(Exception exc) {
+            exc.printStackTrace();
             displayFailure();
         }
         System.out.println();
@@ -185,17 +348,48 @@ public class FiveCardHandTest {
         try {
             displaySuccessIfTrue(!hand.containsFlush());
         } catch(Exception exc) {
+            exc.printStackTrace();
             displayFailure();
         }
-
 
         hand.setCard(4, new Card(Rank.FIVE, Suit.CLUBS));
         try {
             displaySuccessIfTrue(hand.containsFlush());
         } catch(Exception exc) {
+            exc.printStackTrace();
             displayFailure();
         }
 
+        hand = new FiveCardHand(new Card[] {
+            new Card(Rank.FOUR, Suit.HEARTS),
+            new Card(Rank.NINE, Suit.HEARTS),
+            new Card(Rank.THREE, Suit.HEARTS),
+            new Card(Rank.SIX, Suit.DIAMONDS),
+            new Card(Rank.DEUCE, Suit.HEARTS)
+        });
+
+        try {
+            displaySuccessIfTrue(!hand.containsFlush());
+        } catch(Exception exc) {
+            exc.printStackTrace();
+            displayFailure();
+        }
+
+        hand.setCard(3, new Card(Rank.FIVE, Suit.HEARTS));
+        try {
+            displaySuccessIfTrue(hand.containsFlush());
+        } catch(Exception exc) {
+            exc.printStackTrace();
+            displayFailure();
+        }
+
+        hand.setCard(0, new Card(Rank.FIVE, Suit.SPADES));
+        try {
+            displaySuccessIfTrue(!hand.containsFlush());
+        } catch(Exception exc) {
+            exc.printStackTrace();
+            displayFailure();
+        }
         System.out.println();
     }
 
@@ -212,6 +406,7 @@ public class FiveCardHandTest {
         try {
             displaySuccessIfTrue(!hand.containsFullHouse());
         } catch(Exception exc) {
+            exc.printStackTrace();
             displayFailure();
         }
 
@@ -220,9 +415,34 @@ public class FiveCardHandTest {
         try {
             displaySuccessIfTrue(hand.containsFullHouse());
         } catch(Exception exc) {
+            exc.printStackTrace();
             displayFailure();
         }
 
+        hand = new FiveCardHand(new Card[] {
+            new Card(Rank.ACE, Suit.CLUBS),
+            new Card(Rank.KING, Suit.CLUBS),
+            new Card(Rank.QUEEN, Suit.CLUBS),
+            new Card(Rank.FIVE, Suit.CLUBS),
+            new Card(Rank.DEUCE, Suit.SPADES)
+        });
+
+        try {
+            displaySuccessIfTrue(!hand.containsFullHouse());
+        } catch(Exception exc) {
+            exc.printStackTrace();
+            displayFailure();
+        }
+
+        hand.setCard(2, new Card(Rank.KING, Suit.DIAMONDS));
+        hand.setCard(4, new Card(Rank.ACE, Suit.DIAMONDS));
+        hand.setCard(3, new Card(Rank.KING, Suit.HEARTS));
+        try {
+            displaySuccessIfTrue(hand.containsFullHouse());
+        } catch(Exception exc) {
+            exc.printStackTrace();
+            displayFailure();
+        }
         System.out.println();
     }
 
@@ -239,16 +459,43 @@ public class FiveCardHandTest {
         try {
             displaySuccessIfTrue(!hand.containsFourOfAKind());
         } catch(Exception exc) {
+            exc.printStackTrace();
             displayFailure();
         }
-
 
         hand.setCard(2, new Card(Rank.FOUR, Suit.DIAMONDS));
         try {
             displaySuccessIfTrue(hand.containsFourOfAKind());
         } catch(Exception exc) {
+            exc.printStackTrace();
             displayFailure();
         }
+
+        hand = new FiveCardHand(new Card[] {
+            new Card(Rank.FOUR, Suit.CLUBS),
+            new Card(Rank.JACK, Suit.SPADES),
+            new Card(Rank.THREE, Suit.CLUBS),
+            new Card(Rank.ACE, Suit.HEARTS),
+            new Card(Rank.DEUCE, Suit.SPADES)
+        });
+
+        try {
+            displaySuccessIfTrue(!hand.containsFourOfAKind());
+        } catch(Exception exc) {
+            exc.printStackTrace();
+            displayFailure();
+        }
+
+        hand.setCard(0, new Card(Rank.JACK, Suit.DIAMONDS));
+        hand.setCard(2, new Card(Rank.JACK, Suit.HEARTS));
+        hand.setCard(4, new Card(Rank.JACK, Suit.SPADES));
+        try {
+            displaySuccessIfTrue(hand.containsFourOfAKind());
+        } catch(Exception exc) {
+            exc.printStackTrace();
+            displayFailure();
+        }
+
 
         System.out.println();
     }
@@ -266,21 +513,31 @@ public class FiveCardHandTest {
         try {
             displaySuccessIfTrue(!hand.containsStraightFlush());
         } catch(Exception exc) {
+            exc.printStackTrace();
             displayFailure();
         }
 
+        hand.setCard(4, new Card(Rank.SEVEN, Suit.SPADES));
+        try {
+            displaySuccessIfTrue(!hand.containsStraightFlush());
+        } catch(Exception exc) {
+            exc.printStackTrace();
+            displayFailure();
+        }
 
         hand.setCard(4, new Card(Rank.EIGHT, Suit.DIAMONDS));
         try {
             displaySuccessIfTrue(!hand.containsStraightFlush());
         } catch(Exception exc) {
             displayFailure();
+            exc.printStackTrace();
         }
 
         hand.setCard(4, new Card(Rank.EIGHT, Suit.SPADES));
         try {
             displaySuccessIfTrue(hand.containsStraightFlush());
         } catch(Exception exc) {
+            exc.printStackTrace();
             displayFailure();
         }
 
@@ -301,6 +558,7 @@ public class FiveCardHandTest {
         try {
             displaySuccessIfTrue(hand.classify() == PokerHand.HIGH_CARD);
         } catch(Exception exc) {
+            exc.printStackTrace();
             displayFailure();
         }
 
@@ -315,6 +573,7 @@ public class FiveCardHandTest {
         try {
             displaySuccessIfTrue(hand.classify() == PokerHand.PAIR);
         } catch(Exception exc) {
+            exc.printStackTrace();
             displayFailure();
         }
 
@@ -329,6 +588,7 @@ public class FiveCardHandTest {
         try {
             displaySuccessIfTrue(hand.classify() == PokerHand.TWO_PAIR);
         } catch(Exception exc) {
+            exc.printStackTrace();
             displayFailure();
         }
 
@@ -343,6 +603,7 @@ public class FiveCardHandTest {
         try {
             displaySuccessIfTrue(hand.classify() == PokerHand.THREE_OF_A_KIND);
         } catch(Exception exc) {
+            exc.printStackTrace();
             displayFailure();
         }
 
@@ -357,6 +618,7 @@ public class FiveCardHandTest {
         try {
             displaySuccessIfTrue(hand.classify() == PokerHand.STRAIGHT);
         } catch(Exception exc) {
+            exc.printStackTrace();
             displayFailure();
         }
 
@@ -371,6 +633,7 @@ public class FiveCardHandTest {
         try {
             displaySuccessIfTrue(hand.classify() == PokerHand.FLUSH);
         } catch(Exception exc) {
+            exc.printStackTrace();
             displayFailure();
         }
 
@@ -385,6 +648,7 @@ public class FiveCardHandTest {
         try {
             displaySuccessIfTrue(hand.classify() == PokerHand.FULL_HOUSE);
         } catch(Exception exc) {
+            exc.printStackTrace();
             displayFailure();
         }
 
@@ -399,6 +663,7 @@ public class FiveCardHandTest {
         try {
             displaySuccessIfTrue(hand.classify() == PokerHand.FOUR_OF_A_KIND);
         } catch(Exception exc) {
+            exc.printStackTrace();
             displayFailure();
         }
 
@@ -413,10 +678,10 @@ public class FiveCardHandTest {
         try {
             displaySuccessIfTrue(hand.classify() == PokerHand.STRAIGHT_FLUSH);
         } catch(Exception exc) {
+            exc.printStackTrace();
             displayFailure();
         }
 
         System.out.println();
     }
-
 }
