@@ -146,7 +146,6 @@ public class FiveCardHand {
      * two fives.
      */
     public boolean containsFullHouse() {
-        // TODO: Finish me.
         return this.ordered[0].getRank() == this.ordered[1].getRank() && this.ordered[1].getRank() == this.ordered[2].getRank() &&
                 this.ordered[3].getRank() == this.ordered[4].getRank() ||
                 this.ordered[0].getRank() == this.ordered[1].getRank() && this.ordered[2].getRank() == this.ordered[3].getRank() && 
@@ -159,7 +158,10 @@ public class FiveCardHand {
      */
     public boolean containsFourOfAKind() {
         // TODO: Finish me.
-        return false;
+        return this.ordered[0].getRank() == this.ordered[1].getRank() && this.ordered[1].getRank() == this.ordered[2].getRank() &&
+                this.ordered[2].getRank() == this.ordered[3].getRank() ||
+                this.ordered[1].getRank() == this.ordered[2].getRank() && this.ordered[2].getRank() == this.ordered[3].getRank() &&
+                this.ordered[3].getRank() == this.ordered[4].getRank();
     }
 
     /**
