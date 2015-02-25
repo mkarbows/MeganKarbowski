@@ -111,9 +111,9 @@ public class FiveCardHand {
      */
     public boolean containsThreeOfAKind() {
         // TODO: Finish me.
-        return this.ordered[0].getValue() == this.ordered[1].getValue() == this.ordered[2].getValue() ||
-            this.ordered[1].getValue() == this.ordered[2].getValue() == this.ordered[3].getValue() ||
-            this.ordered[2].getValue() == this.ordered[3].getValue() == this.ordered[4].getValue();
+        return this.ordered[0].getValue() == this.ordered[1].getValue() && this.ordered[1].getValue() == this.ordered[2].getValue() ||
+            this.ordered[1].getValue() == this.ordered[2].getValue() && this.ordered[2].getValue() == this.ordered[3].getValue() ||
+            this.ordered[2].getValue() == this.ordered[3].getValue() && this.ordered[3].getValue() == this.ordered[4].getValue();
     }
 
     /**
