@@ -105,6 +105,9 @@ public class FiveCardHandTest {
         hand.setCard(3, new Card(Rank.ACE, Suit.SPADES));
         try {
             displaySuccessIfTrue(hand.containsPair());
+            System.out.println(hand);
+            System.out.println(hand.orderedString());
+
         } catch(Exception exc) {
             exc.printStackTrace();
             displayFailure();

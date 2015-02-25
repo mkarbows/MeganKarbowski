@@ -19,7 +19,7 @@ public class FiveCardHand {
     /**
      * Represents the hand, but ordered from lowest rank to highest.
      */
-    private Card[] ordered;
+    public Card[] ordered;
 
     /**
      * Constructs a five card hand.
@@ -56,6 +56,8 @@ public class FiveCardHand {
     public void setCard(int index, Card card) {
         if (index < HAND_SIZE && index >= 0) {
             // TODO: Finish me.
+            this.hand[index] = card;
+            this.setOrdered();
         } else {
             throw new IllegalArgumentException(
                     "No card at the given index: " + index);
@@ -69,7 +71,8 @@ public class FiveCardHand {
     public Card getCard(int index) {
         if (index >= 0 && index < HAND_SIZE) {
             // TODO: Finish me.
-            return null;
+            Card c = this.hand[index];
+            return c;
         } else {
             throw new IllegalArgumentException(
                     "No card at the given index: " + index);
@@ -88,24 +91,27 @@ public class FiveCardHand {
      * Returns true if the hand has at least one pair (two of the same card).
      */
     public boolean containsPair() {
-        // TODO: Finish me.
-        return false;
+        return this.ordered[0].getValue() == this.ordered[1].getValue() ||
+            this.ordered[1].getValue() == this.ordered[2].getValue() ||
+            this.ordered[2].getValue() == this.ordered[3].getValue() ||
+            this.ordered[3].getValue() == this.ordered[4].getValue(); 
     }
-
     /**
      * Returns true if the hand has two pairs.
      */
     public boolean containsTwoPair() {
-        // TODO: Finish me.
-        return false;
+        return this.ordered[0].getValue() == this.ordered[1].getValue() && this.ordered[1].getValue() == this.ordered[2].getValue() ||
+            this.ordered[1].getValue() == this.ordered[2].getValue() && this.ordered[3].getValue() == this.ordered[4].getValue() ||
+            this.ordered[0].getValue() == this.ordered[1].getValue() && this.ordered[3].getValue() == this.ordered[3].getValue();
     }
 
     /**
      * Returns true if the hand contains at least three of the same card.
      */
     public boolean containsThreeOfAKind() {
-        // TODO: Finish me.
-        return false;
+        return this.ordered[0].getValue() == this.ordered[1].getValue() && this.ordered[1].getValue() == this.ordered[2].getValue() ||
+            this.ordered[1].getValue() == this.ordered[2].getValue() && this.ordered[2].getValue() == this.ordered[3].getValue() ||
+            this.ordered[2].getValue() == this.ordered[3].getValue() && this.ordered[3].getValue() == this.ordered[4].getValue();
     }
 
     /**
@@ -113,16 +119,25 @@ public class FiveCardHand {
      * Remember, A-2-3-4-5 and 10-J-Q-K-A also count.
      */
     public boolean containsStraight() {
-        // TODO: Finish me.
-        return false;
+        for (int i = 0; i < hand.length - 1; i++) {
+            if (this.ordered[i].getValue() != this.ordered[i+1].getValue() - 1 && 
+                (i != 3 || this.ordered[i].getRank() != Rank.FIVE || this.ordered[i+1].getRank() != Rank.ACE)) {
+                return false;
+            } 
+        } 
+        return true;
     }
 
     /**
      * Returns true if all five cards have the same suit.
      */
     public boolean containsFlush() {
-        // TODO: Finish me.
-        return false;
+        for (int i = 0; i < hand.length - 1; i++) {
+            if (this.ordered[i].getSuit() != this.ordered[i+1].getSuit()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -131,8 +146,10 @@ public class FiveCardHand {
      * two fives.
      */
     public boolean containsFullHouse() {
-        // TODO: Finish me.
-        return false;
+        return this.ordered[0].getRank() == this.ordered[1].getRank() && this.ordered[1].getRank() == this.ordered[2].getRank() &&
+                this.ordered[3].getRank() == this.ordered[4].getRank() ||
+                this.ordered[0].getRank() == this.ordered[1].getRank() && this.ordered[2].getRank() == this.ordered[3].getRank() && 
+                this.ordered[3].getRank() == this.ordered[4].getRank();
     }
 
     /**
@@ -140,16 +157,17 @@ public class FiveCardHand {
      * rank.
      */
     public boolean containsFourOfAKind() {
-        // TODO: Finish me.
-        return false;
+        return this.ordered[0].getRank() == this.ordered[1].getRank() && this.ordered[1].getRank() == this.ordered[2].getRank() &&
+                this.ordered[2].getRank() == this.ordered[3].getRank() ||
+                this.ordered[1].getRank() == this.ordered[2].getRank() && this.ordered[2].getRank() == this.ordered[3].getRank() &&
+                this.ordered[3].getRank() == this.ordered[4].getRank();
     }
 
     /**
      * Returns true if the hand contains both a straight and a flush.
      */
     public boolean containsStraightFlush() {
-        // TODO: Finish me.
-        return false;
+        return containsStraight() && containsFlush();
     }
 
     @Override
@@ -158,4 +176,12 @@ public class FiveCardHand {
                 + "  " + hand[2].toString() + "  " + hand[3].toString()
                 + "  " + hand[4].toString() + " ]";
     }
+
+    public String orderedString() {
+        Card [] oh = this.ordered;
+        return "[ " + oh[0].toString() + "  " + oh[1].toString()
+                + "  " + oh[2].toString() + "  " + oh[3].toString()
+                + "  " + oh[4].toString() + " ]";
+    }
+
 }
