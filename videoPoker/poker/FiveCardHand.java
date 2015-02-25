@@ -122,7 +122,13 @@ public class FiveCardHand {
      */
     public boolean containsStraight() {
         // TODO: Finish me.
-        return false;
+        for (int i = 0; i < hand.length - 1; i++) {
+            if (this.ordered[i].getValue() != this.ordered[i+1].getValue() - 1 && 
+                (i != 3 || this.ordered[i].getRank() != Rank.FIVE || this.ordered[i+1].getRank() != Rank.ACE)) {
+                return false;
+            } 
+        } 
+        return true;
     }
 
     /**
