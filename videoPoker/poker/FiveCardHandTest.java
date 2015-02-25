@@ -1,422 +1,170 @@
 package poker;
 
-public class FiveCardHandTest {
+import java.util.Arrays;
 
-    private static int attempts = 0;
-    private static int successes = 0;
+/**
+ * Represents a five card hand in poker.
+ */
+public class FiveCardHand {
 
-    public static void main(String[] args) {
-        attempts = 0;
-        successes = 0;
+    /**
+     * This class ain't called SixCardHand...
+     */
+    public static final byte HAND_SIZE = 5;
 
-        test_containsPair();
-        test_containsTwoPair();
-        test_containsThreeOfAKind();
-        test_containsStraight();
-        test_containsFlush();
-        test_containsFullHouse();
-        test_containsFourOfAKind();
-        test_containsStraightFlush();
-        test_classify();
+    /**
+     * Represents the hand in whatever order it was created.
+     */
+    private Card[] hand;
+    /**
+     * Represents the hand, but ordered from lowest rank to highest.
+     */
+    private Card[] ordered;
 
-        System.out.println(successes + "/" + attempts + " tests passed.");
+    /**
+     * Constructs a five card hand.
+     * Surprise, suprise, it freaks out if hand isn't of length 5.
+     */
+    public FiveCardHand(Card[] hand) {
+        if (hand.length != HAND_SIZE) {
+            throw new IllegalArgumentException(
+                    "Card array must contain " + HAND_SIZE + " cards.");
+        }
+        this.hand = hand;
+        setOrdered();
     }
 
-    private static void displaySuccessIfTrue(boolean value) {
-        attempts++;
-        successes += value ? 1 : 0;
-
-        System.out.println(value ? "success" : "failure");
+    /**
+     * Creates a copy of the hand array, sticks it in ordered, and sorts it.
+     */
+    private void setOrdered() {
+        ordered = Arrays.copyOf(hand, hand.length);
+        Arrays.sort(ordered);
     }
 
-    private static void displayFailure() {
-        displaySuccessIfTrue(false);
+    /**
+    * Returns a COPY of the card array representing the hand.
+    */
+    public Card[] getHand() {
+        return Arrays.copyOf(hand, hand.length);
     }
 
-    private static void test_containsPair() {
-        System.out.println("Testing containsPair...");
-        FiveCardHand hand = new FiveCardHand(new Card[] {
-            new Card(Rank.ACE, Suit.CLUBS),
-            new Card(Rank.DEUCE, Suit.CLUBS),
-            new Card(Rank.FIVE, Suit.SPADES),
-            new Card(Rank.FOUR, Suit.DIAMONDS),
-            new Card(Rank.JACK, Suit.HEARTS)
-        });
-
-        try {
-            displaySuccessIfTrue(!hand.containsPair());
-        } catch(Exception exc) {
-            displayFailure();
+    /**
+     * Sets the card at the given index and reorders the ordered array,
+     * or throws a hissy fit if the index is bad.
+     */
+    public void setCard(int index, Card card) {
+        if (index < HAND_SIZE && index >= 0) {
+            // TODO: Finish me.
+            this.hand[index] = card;
+            this.setOrdered();
+        } else {
+            throw new IllegalArgumentException(
+                    "No card at the given index: " + index);
         }
-
-
-        hand.setCard(3, new Card(Rank.ACE, Suit.SPADES));
-        try {
-            displaySuccessIfTrue(hand.containsPair());
-        } catch(Exception exc) {
-            displayFailure();
-        }
-        System.out.println();
     }
 
-    private static void test_containsTwoPair() {
-        System.out.println("Testing containsTwoPair...");
-        FiveCardHand hand = new FiveCardHand(new Card[] {
-            new Card(Rank.ACE, Suit.CLUBS),
-            new Card(Rank.DEUCE, Suit.CLUBS),
-            new Card(Rank.FIVE, Suit.SPADES),
-            new Card(Rank.ACE, Suit.DIAMONDS),
-            new Card(Rank.JACK, Suit.HEARTS)
-        });
-
-        try {
-            displaySuccessIfTrue(!hand.containsTwoPair());
-        } catch(Exception exc) {
-            displayFailure();
+    /**
+     * Returns a COPY of the card at the given index. Or freaks out out if
+     * it's a bad index.
+     */
+    public Card getCard(int index) {
+        if (index >= 0 && index < HAND_SIZE) {
+            // TODO: Finish me.
+            Card c = this.hand[index];
+            return c;
+        } else {
+            throw new IllegalArgumentException(
+                    "No card at the given index: " + index);
         }
-
-
-        hand.setCard(2, new Card(Rank.JACK, Suit.SPADES));
-        try {
-            displaySuccessIfTrue(hand.containsTwoPair());
-        } catch(Exception exc) {
-            displayFailure();
-        }
-        System.out.println();
     }
 
-    private static void test_containsThreeOfAKind() {
-        System.out.println("Testing containsThreeOfAKind...");
-        FiveCardHand hand = new FiveCardHand(new Card[] {
-            new Card(Rank.ACE, Suit.CLUBS),
-            new Card(Rank.DEUCE, Suit.CLUBS),
-            new Card(Rank.DEUCE, Suit.SPADES),
-            new Card(Rank.ACE, Suit.DIAMONDS),
-            new Card(Rank.JACK, Suit.HEARTS)
-        });
-
-        try {
-            displaySuccessIfTrue(!hand.containsThreeOfAKind());
-        } catch(Exception exc) {
-            displayFailure();
-        }
-
-
-        hand.setCard(4, new Card(Rank.DEUCE, Suit.CLUBS));
-        try {
-            displaySuccessIfTrue(hand.containsThreeOfAKind());
-        } catch(Exception exc) {
-            displayFailure();
-        }
-        System.out.println();
+    /**
+    * Returns the best poker hand you can make given this hand's cards.
+    */
+    public PokerHand classify() {
+        // TODO: Finish me.
+        return PokerHand.HIGH_CARD;
     }
 
-    private static void test_containsStraight() {
-        System.out.println("Testing containsStraight...");
-        FiveCardHand hand = new FiveCardHand(new Card[] {
-            new Card(Rank.JACK, Suit.CLUBS),
-            new Card(Rank.FOUR, Suit.CLUBS),
-            new Card(Rank.THREE, Suit.SPADES),
-            new Card(Rank.SIX, Suit.DIAMONDS),
-            new Card(Rank.DEUCE, Suit.HEARTS)
-        });
-
-        try {
-            displaySuccessIfTrue(!hand.containsStraight());
-        } catch(Exception exc) {
-            displayFailure();
+    /**
+     * Returns true if the hand has at least one pair (two of the same card).
+     */
+    public boolean containsPair() {
+        // TODO: Finish me.
+        if (this.ordered[0].equals(this.ordered[1]) || 
+            this.ordered[1].equals(this.ordered[2]) || 
+            this.ordered[2].equals(this.ordered[3]) || 
+            this.ordered[3].equals(this.ordered[4])) {
+            return true;
         }
+        return false;
+    }
+    /**
+     * Returns true if the hand has two pairs.
+     */
+    public boolean containsTwoPair() {
+        // TODO: Finish me.
 
-
-        hand.setCard(0, new Card(Rank.FIVE, Suit.CLUBS));
-        try {
-            displaySuccessIfTrue(hand.containsStraight());
-        } catch(Exception exc) {
-            displayFailure();
-        }
-
-        hand = new FiveCardHand(new Card[] {
-            new Card(Rank.ACE, Suit.CLUBS),
-            new Card(Rank.FOUR, Suit.CLUBS),
-            new Card(Rank.THREE, Suit.SPADES),
-            new Card(Rank.FIVE, Suit.DIAMONDS),
-            new Card(Rank.DEUCE, Suit.HEARTS)
-        });
-
-        try {
-            displaySuccessIfTrue(hand.containsStraight());
-        } catch(Exception exc) {
-            displayFailure();
-        }
-
-        hand = new FiveCardHand(new Card[] {
-            new Card(Rank.JACK, Suit.CLUBS),
-            new Card(Rank.KING, Suit.CLUBS),
-            new Card(Rank.QUEEN, Suit.SPADES),
-            new Card(Rank.ACE, Suit.DIAMONDS),
-            new Card(Rank.TEN, Suit.HEARTS)
-        });
-
-        try {
-            displaySuccessIfTrue(hand.containsStraight());
-        } catch(Exception exc) {
-            displayFailure();
-        }
-
-        hand.setCard(4, new Card(Rank.DEUCE, Suit.HEARTS));
-        try {
-            displaySuccessIfTrue(!hand.containsStraight());
-        } catch(Exception exc) {
-            displayFailure();
-        }
-        System.out.println();
+        return false;
     }
 
-    private static void test_containsFlush() {
-        System.out.println("Testing containsFlush...");
-        FiveCardHand hand = new FiveCardHand(new Card[] {
-            new Card(Rank.JACK, Suit.CLUBS),
-            new Card(Rank.FOUR, Suit.CLUBS),
-            new Card(Rank.THREE, Suit.CLUBS),
-            new Card(Rank.SIX, Suit.CLUBS),
-            new Card(Rank.DEUCE, Suit.SPADES)
-        });
-
-        try {
-            displaySuccessIfTrue(!hand.containsFlush());
-        } catch(Exception exc) {
-            displayFailure();
-        }
-
-
-        hand.setCard(4, new Card(Rank.FIVE, Suit.CLUBS));
-        try {
-            displaySuccessIfTrue(hand.containsFlush());
-        } catch(Exception exc) {
-            displayFailure();
-        }
-
-        System.out.println();
+    /**
+     * Returns true if the hand contains at least three of the same card.
+     */
+    public boolean containsThreeOfAKind() {
+        // TODO: Finish me.
+        return false;
     }
 
-    private static void test_containsFullHouse() {
-        System.out.println("Testing containsFullHouse...");
-        FiveCardHand hand = new FiveCardHand(new Card[] {
-            new Card(Rank.THREE, Suit.CLUBS),
-            new Card(Rank.FOUR, Suit.CLUBS),
-            new Card(Rank.THREE, Suit.CLUBS),
-            new Card(Rank.THREE, Suit.CLUBS),
-            new Card(Rank.DEUCE, Suit.SPADES)
-        });
-
-        try {
-            displaySuccessIfTrue(!hand.containsFullHouse());
-        } catch(Exception exc) {
-            displayFailure();
-        }
-
-
-        hand.setCard(1, new Card(Rank.DEUCE, Suit.CLUBS));
-        try {
-            displaySuccessIfTrue(hand.containsFullHouse());
-        } catch(Exception exc) {
-            displayFailure();
-        }
-
-        System.out.println();
+    /**
+     * Returns true if the five cards are in sequential order.
+     * Remember, A-2-3-4-5 and 10-J-Q-K-A also count.
+     */
+    public boolean containsStraight() {
+        // TODO: Finish me.
+        return false;
     }
 
-    private static void test_containsFourOfAKind() {
-        System.out.println("Testing containsFourOfAKind...");
-        FiveCardHand hand = new FiveCardHand(new Card[] {
-            new Card(Rank.FOUR, Suit.CLUBS),
-            new Card(Rank.FOUR, Suit.SPADES),
-            new Card(Rank.THREE, Suit.CLUBS),
-            new Card(Rank.FOUR, Suit.HEARTS),
-            new Card(Rank.DEUCE, Suit.SPADES)
-        });
-
-        try {
-            displaySuccessIfTrue(!hand.containsFourOfAKind());
-        } catch(Exception exc) {
-            displayFailure();
-        }
-
-
-        hand.setCard(2, new Card(Rank.FOUR, Suit.DIAMONDS));
-        try {
-            displaySuccessIfTrue(hand.containsFourOfAKind());
-        } catch(Exception exc) {
-            displayFailure();
-        }
-
-        System.out.println();
+    /**
+     * Returns true if all five cards have the same suit.
+     */
+    public boolean containsFlush() {
+        // TODO: Finish me.
+        return false;
     }
 
-    private static void test_containsStraightFlush() {
-        System.out.println("Testing containsStraightFlush...");
-        FiveCardHand hand = new FiveCardHand(new Card[] {
-            new Card(Rank.JACK, Suit.SPADES),
-            new Card(Rank.QUEEN, Suit.SPADES),
-            new Card(Rank.TEN, Suit.SPADES),
-            new Card(Rank.NINE, Suit.SPADES),
-            new Card(Rank.DEUCE, Suit.SPADES)
-        });
-
-        try {
-            displaySuccessIfTrue(!hand.containsStraightFlush());
-        } catch(Exception exc) {
-            displayFailure();
-        }
-
-
-        hand.setCard(4, new Card(Rank.EIGHT, Suit.DIAMONDS));
-        try {
-            displaySuccessIfTrue(!hand.containsStraightFlush());
-        } catch(Exception exc) {
-            displayFailure();
-        }
-
-        hand.setCard(4, new Card(Rank.EIGHT, Suit.SPADES));
-        try {
-            displaySuccessIfTrue(hand.containsStraightFlush());
-        } catch(Exception exc) {
-            displayFailure();
-        }
-
-        System.out.println();
+    /**
+     * Returns true if the hand contains three cards of one rank and two cards
+     * of another rank. For example three aces and two kings or three twos and
+     * two fives.
+     */
+    public boolean containsFullHouse() {
+        // TODO: Finish me.
+        return false;
     }
 
-    private static void test_classify() {
-        System.out.println("Testing classify...");
-
-        FiveCardHand hand = new FiveCardHand(new Card[] {
-            new Card(Rank.JACK, Suit.SPADES),
-            new Card(Rank.FOUR, Suit.DIAMONDS),
-            new Card(Rank.TEN, Suit.SPADES),
-            new Card(Rank.NINE, Suit.SPADES),
-            new Card(Rank.DEUCE, Suit.HEARTS)
-        });
-
-        try {
-            displaySuccessIfTrue(hand.classify() == PokerHand.HIGH_CARD);
-        } catch(Exception exc) {
-            displayFailure();
-        }
-
-        hand = new FiveCardHand(new Card[] {
-            new Card(Rank.JACK, Suit.CLUBS),
-            new Card(Rank.KING, Suit.CLUBS),
-            new Card(Rank.QUEEN, Suit.SPADES),
-            new Card(Rank.ACE, Suit.DIAMONDS),
-            new Card(Rank.QUEEN, Suit.HEARTS)
-        });
-
-        try {
-            displaySuccessIfTrue(hand.classify() == PokerHand.PAIR);
-        } catch(Exception exc) {
-            displayFailure();
-        }
-
-        hand = new FiveCardHand(new Card[] {
-            new Card(Rank.ACE, Suit.CLUBS),
-            new Card(Rank.DEUCE, Suit.CLUBS),
-            new Card(Rank.JACK, Suit.SPADES),
-            new Card(Rank.DEUCE, Suit.DIAMONDS),
-            new Card(Rank.ACE, Suit.HEARTS)
-        });
-
-        try {
-            displaySuccessIfTrue(hand.classify() == PokerHand.TWO_PAIR);
-        } catch(Exception exc) {
-            displayFailure();
-        }
-
-        hand = new FiveCardHand(new Card[] {
-            new Card(Rank.ACE, Suit.CLUBS),
-            new Card(Rank.ACE, Suit.CLUBS),
-            new Card(Rank.JACK, Suit.SPADES),
-            new Card(Rank.DEUCE, Suit.DIAMONDS),
-            new Card(Rank.ACE, Suit.HEARTS)
-        });
-
-        try {
-            displaySuccessIfTrue(hand.classify() == PokerHand.THREE_OF_A_KIND);
-        } catch(Exception exc) {
-            displayFailure();
-        }
-
-        hand = new FiveCardHand(new Card[] {
-            new Card(Rank.SEVEN, Suit.CLUBS),
-            new Card(Rank.FOUR, Suit.CLUBS),
-            new Card(Rank.FIVE, Suit.SPADES),
-            new Card(Rank.SIX, Suit.DIAMONDS),
-            new Card(Rank.EIGHT, Suit.HEARTS)
-        });
-
-        try {
-            displaySuccessIfTrue(hand.classify() == PokerHand.STRAIGHT);
-        } catch(Exception exc) {
-            displayFailure();
-        }
-
-        hand = new FiveCardHand(new Card[] {
-            new Card(Rank.ACE, Suit.CLUBS),
-            new Card(Rank.DEUCE, Suit.CLUBS),
-            new Card(Rank.JACK, Suit.CLUBS),
-            new Card(Rank.DEUCE, Suit.CLUBS),
-            new Card(Rank.ACE, Suit.CLUBS)
-        });
-
-        try {
-            displaySuccessIfTrue(hand.classify() == PokerHand.FLUSH);
-        } catch(Exception exc) {
-            displayFailure();
-        }
-
-        hand = new FiveCardHand(new Card[] {
-            new Card(Rank.JACK, Suit.CLUBS),
-            new Card(Rank.DEUCE, Suit.CLUBS),
-            new Card(Rank.JACK, Suit.SPADES),
-            new Card(Rank.DEUCE, Suit.DIAMONDS),
-            new Card(Rank.JACK, Suit.HEARTS)
-        });
-
-        try {
-            displaySuccessIfTrue(hand.classify() == PokerHand.FULL_HOUSE);
-        } catch(Exception exc) {
-            displayFailure();
-        }
-
-        hand = new FiveCardHand(new Card[] {
-            new Card(Rank.THREE, Suit.CLUBS),
-            new Card(Rank.THREE, Suit.SPADES),
-            new Card(Rank.DEUCE, Suit.SPADES),
-            new Card(Rank.THREE, Suit.DIAMONDS),
-            new Card(Rank.THREE, Suit.HEARTS)
-        });
-
-        try {
-            displaySuccessIfTrue(hand.classify() == PokerHand.FOUR_OF_A_KIND);
-        } catch(Exception exc) {
-            displayFailure();
-        }
-
-        hand = new FiveCardHand(new Card[] {
-            new Card(Rank.NINE, Suit.HEARTS),
-            new Card(Rank.JACK, Suit.HEARTS),
-            new Card(Rank.QUEEN, Suit.HEARTS),
-            new Card(Rank.EIGHT, Suit.HEARTS),
-            new Card(Rank.TEN, Suit.HEARTS)
-        });
-
-        try {
-            displaySuccessIfTrue(hand.classify() == PokerHand.STRAIGHT_FLUSH);
-        } catch(Exception exc) {
-            displayFailure();
-        }
-
-        System.out.println();
+    /**
+     * Returns true if the the hand contains at least four cards of the same
+     * rank.
+     */
+    public boolean containsFourOfAKind() {
+        // TODO: Finish me.
+        return false;
     }
 
+    /**
+     * Returns true if the hand contains both a straight and a flush.
+     */
+    public boolean containsStraightFlush() {
+        // TODO: Finish me.
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "[ " + hand[0].toString() + "  " + hand[1].toString()
+                + "  " + hand[2].toString() + "  " + hand[3].toString()
+                + "  " + hand[4].toString() + " ]";
+    }
 }
