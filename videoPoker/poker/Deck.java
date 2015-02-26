@@ -54,8 +54,6 @@ public class Deck {
      */
     
     public Card cardAt(int index) {
-        // TODO: Finish me.
-
         if (index < 0 || index > cardArray.length) {
             return null;
         } 
@@ -71,7 +69,6 @@ public class Deck {
      * Theoretically it should never return -1 but in practice, shit happens...
      */
     public int indexOf(Card card) {
-        // TODO: Finish me.
         for (int i = 0; i < cardArray.length; i++) { 
             if (this.cardAt(i).equals(card)) {
                 return i;
@@ -96,7 +93,6 @@ public class Deck {
     }
 
     public void shuffle() {
-        // TODO: Finish me.
         for (int i = 0; i < cardArray.length; i++) {
             int j = (int)(Math.random() * 51);
             this.swap(i, j);
@@ -107,7 +103,6 @@ public class Deck {
      * Takes the top half of the deck and puts it on the bottom.
      */
     public void cut() {
-        // TODO: Finish me.
         for (int i = 0; i < cardArray.length / 2; i++) {
             this.swap(i, i + 26);
         }
