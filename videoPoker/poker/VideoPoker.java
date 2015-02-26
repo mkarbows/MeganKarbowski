@@ -34,6 +34,9 @@ public class VideoPoker {
             // The game loop. It loops while playAgain is true;
             do {
                 // Feel free to tweak any messages.
+
+                        //put this v in a while loop to check if the wager is valid and 
+                        //prompt the user for another wager if theirs is invalid
                 System.out.println("Credits: " + credits);
                 System.out.println("How much would you like to wager?");
 
@@ -45,8 +48,10 @@ public class VideoPoker {
                 credits = credits - wager;
                 if (wager < 0) {
                     System.out.println("Please enter a valid wager.");
-                } // figure out if this is all you need to do ****************************************
-                // need to have the code ask for a valid wager again if the wager is wrong
+                } 
+
+                        // figure out if this is all you need to do ****************************************
+                        // need to have the code ask for a valid wager again if the wager is wrong
 
                 Deck deck = new Deck(SHUFFLE_NUMBER, true);
 
@@ -74,14 +79,25 @@ public class VideoPoker {
                 // is created.
                 String[] slots = inputString.isEmpty() ? new String[0]
                         : inputString.split(", | |,");
+
+                        //int[] numSlots = Integer.parseInt[slots]; //******************************************************
                 //TODO: Switch out the cards they didn't want to keep.
                 //      Then classify their hand and give them money based on
                 //      the payout method.
 
-                //need to parseInt the string to make it so we can refer to the indices
-                //use setCard in FiveCardHand and you will use the index the user gives you and then switch it
-                    // with the card at the top of the deck, would have to switch the system.out.println to 
-                    // to say something that would make sense for switching out the cards they don't want
+                        //need to parseInt the string to make it so we can refer to the indices
+
+                        //use setCard in FiveCardHand and you will use the index the user gives you and then switch it
+                        // with the card at the top of the deck, would have to switch the system.out.println to 
+                        // to say something that would make sense for switching out the cards they don't want
+                
+                for (int i=0; i < slots.length; i++) {
+                    int slot = Integer.parseInt(slots[i]) - 1;
+                    hand.setCard(slot, deck.cardAt(topOfDeck++));
+                }
+                System.out.println(hand);
+                System.out.println(hand.classify());
+                
 
                 if (credits <= 0) {
                     playAgain = false;
