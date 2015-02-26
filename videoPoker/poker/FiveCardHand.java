@@ -84,7 +84,32 @@ public class FiveCardHand {
     */
     public PokerHand classify() {
         // TODO: Finish me.
-        return PokerHand.HIGH_CARD;
+        if (containsStraightFlush() == true) {
+            return PokerHand.STRAIGHT_FLUSH;
+        } 
+        if (containsFourOfAKind() == true) {
+            return PokerHand.FOUR_OF_A_KIND;
+        }
+        if (containsFullHouse() == true) {
+            return PokerHand.FULL_HOUSE;
+        }
+        if (containsFlush() == true) {
+            return PokerHand.FLUSH;
+        }
+        if (containsStraight() == true) {
+            return PokerHand.STRAIGHT;
+        }
+        if (containsThreeOfAKind() == true) {
+            return PokerHand.THREE_OF_A_KIND;
+        }
+        if (containsTwoPair() == true) {
+            return PokerHand.TWO_PAIR;
+        }
+        if (containsPair() == true) {
+            return PokerHand.PAIR;
+        } else {
+            return PokerHand.HIGH_CARD;
+        } 
     }
 
     /**
