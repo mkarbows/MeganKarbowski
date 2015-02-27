@@ -67,12 +67,9 @@ public class VideoPoker {
                     }
                 }
 
-
-
                 credits = credits - wager;
 
                 Deck deck = new Deck(SHUFFLE_NUMBER, true);
-
 
                 Card[] cardArray = new Card[5];
                 int topOfDeck = 0;
@@ -110,6 +107,10 @@ public class VideoPoker {
                 System.out.println(hand.classify());
 
                 credits += payout(hand, wager);
+                
+                System.out.println("Payout: " + payout(hand, wager));
+                System.out.println("Credits: " + credits);
+
 
 
                 if (credits <= 0) {
