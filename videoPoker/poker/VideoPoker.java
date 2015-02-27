@@ -35,8 +35,6 @@ public class VideoPoker {
             do {
                 // Feel free to tweak any messages.
 
-                        //put this v in a while loop to check if the wager is valid and 
-                        //prompt the user for another wager if theirs is invalid
                 System.out.println("Credits: " + credits);
                 System.out.println("How much would you like to wager?");
 
@@ -46,7 +44,7 @@ public class VideoPoker {
                 int wager;
                 try {
                     wagerInput = input.nextLine();
-                    //TODO: Handle the wager input and deal some cards.
+
                     wager = Integer.parseInt(wagerInput);
                 } catch (NumberFormatException e) {
                     wager = 0;
@@ -94,9 +92,6 @@ public class VideoPoker {
                 // is created.
                 String[] slots = inputString.isEmpty() ? new String[0]
                         : inputString.split(", | |,");
-                //TODO: Switch out the cards they didn't want to keep.
-                //      Then classify their hand and give them money based on
-                //      the payout method.
     
                 for (int i=0; i < slots.length; i++) {
                     int slot = Integer.parseInt(slots[i]) - 1;
@@ -107,11 +102,9 @@ public class VideoPoker {
                 System.out.println(hand.classify());
 
                 credits += payout(hand, wager);
-                
+
                 System.out.println("Payout: " + payout(hand, wager));
                 System.out.println("Credits: " + credits);
-
-
 
                 if (credits <= 0) {
                     playAgain = false;
