@@ -55,12 +55,11 @@ public class FiveCardHand {
      */
     public void setCard(int index, Card card) {
         if (index < HAND_SIZE && index >= 0) {
-            // TODO: Finish me.
             this.hand[index] = card;
             this.setOrdered();
         } else {
             throw new IllegalArgumentException(
-                    "No card at the given index: " + index);
+                "No card at the given index: " + index);
         }
     }
 
@@ -70,12 +69,11 @@ public class FiveCardHand {
      */
     public Card getCard(int index) {
         if (index >= 0 && index < HAND_SIZE) {
-            // TODO: Finish me.
             Card c = this.hand[index];
             return c;
         } else {
             throw new IllegalArgumentException(
-                    "No card at the given index: " + index);
+                "No card at the given index: " + index);
         }
     }
 
@@ -83,7 +81,6 @@ public class FiveCardHand {
     * Returns the best poker hand you can make given this hand's cards.
     */
     public PokerHand classify() {
-        // TODO: Finish me.
         if (containsStraightFlush() == true) {
             return PokerHand.STRAIGHT_FLUSH;
         } 
@@ -121,6 +118,7 @@ public class FiveCardHand {
             this.ordered[2].getValue() == this.ordered[3].getValue() ||
             this.ordered[3].getValue() == this.ordered[4].getValue(); 
     }
+
     /**
      * Returns true if the hand has two pairs.
      */
@@ -172,9 +170,9 @@ public class FiveCardHand {
      */
     public boolean containsFullHouse() {
         return this.ordered[0].getRank() == this.ordered[1].getRank() && this.ordered[1].getRank() == this.ordered[2].getRank() &&
-                this.ordered[3].getRank() == this.ordered[4].getRank() ||
-                this.ordered[0].getRank() == this.ordered[1].getRank() && this.ordered[2].getRank() == this.ordered[3].getRank() && 
-                this.ordered[3].getRank() == this.ordered[4].getRank();
+            this.ordered[3].getRank() == this.ordered[4].getRank() ||
+            this.ordered[0].getRank() == this.ordered[1].getRank() && this.ordered[2].getRank() == this.ordered[3].getRank() && 
+            this.ordered[3].getRank() == this.ordered[4].getRank();
     }
 
     /**
@@ -183,9 +181,9 @@ public class FiveCardHand {
      */
     public boolean containsFourOfAKind() {
         return this.ordered[0].getRank() == this.ordered[1].getRank() && this.ordered[1].getRank() == this.ordered[2].getRank() &&
-                this.ordered[2].getRank() == this.ordered[3].getRank() ||
-                this.ordered[1].getRank() == this.ordered[2].getRank() && this.ordered[2].getRank() == this.ordered[3].getRank() &&
-                this.ordered[3].getRank() == this.ordered[4].getRank();
+            this.ordered[2].getRank() == this.ordered[3].getRank() ||
+            this.ordered[1].getRank() == this.ordered[2].getRank() && this.ordered[2].getRank() == this.ordered[3].getRank() &&
+            this.ordered[3].getRank() == this.ordered[4].getRank();
     }
 
     /**
@@ -201,12 +199,10 @@ public class FiveCardHand {
                 + "  " + hand[2].toString() + "  " + hand[3].toString()
                 + "  " + hand[4].toString() + " ]";
     }
-
     public String orderedString() {
         Card [] oh = this.ordered;
         return "[ " + oh[0].toString() + "  " + oh[1].toString()
                 + "  " + oh[2].toString() + "  " + oh[3].toString()
                 + "  " + oh[4].toString() + " ]";
     }
-
 }
