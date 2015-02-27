@@ -50,7 +50,6 @@ public class VideoPoker {
                     wager = 0;
                 }
 
-                
                 while (credits - wager < 0 || wager <= 0) {
                     if (credits - wager < 0) {
                         System.out.println("You don't have enought credits to wager that amount, please enter a valid wager!");
@@ -113,7 +112,6 @@ public class VideoPoker {
                     System.out.println("Play again? (y/n)");
                     String yesOrNo = input.nextLine();
                     boolean validResponse = false;
-
                     while (!validResponse) {
                         if (yesOrNo.equals("y") || yesOrNo.equals("Y") || yesOrNo.equals("yes")) {
                             playAgain = true;
