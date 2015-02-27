@@ -94,7 +94,7 @@ public class Deck {
 
     public void shuffle() {
         for (int i = 0; i < cardArray.length; i++) {
-            int j = (int)(Math.random() * 51);
+            int j = (int)(Math.random() * (cardArray.length - 1 - i));
             this.swap(i, j);
         }
     }
