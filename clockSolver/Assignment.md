@@ -59,7 +59,8 @@ whether or not the given angle is made by the hour and minute hand of the clock.
         with the given angle to search for and creates a clock starting at 12:00:00.0 with
         the given grain. Throws an IllegalArgumentException if the grain is <= 0.0 or the
         angleToFind < 0.0.
-* **public Clock getClock():** Returns the Clock Object associated with this ClockSolver.
+* **public Clock getClockTime():** Returns a String representation of the current time on the clock.
+* **public Clock getSecondsPassed():** Returns the number of seconds that have elapsed on the Solver's internal clock.
 * **public double getAngleBetween():** Returns the current angle between the hour and minute hands
         of the Clock Object.
 * **public void tickClock():** Ticks the clock and updates the angle between the hands.
