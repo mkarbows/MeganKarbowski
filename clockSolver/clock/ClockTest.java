@@ -36,6 +36,127 @@ public class ClockTest {
         System.out.println("Testing Clock Constructors...");
 
         // TODO: It's lonely here. Add some tests.
+        
+        //tests the first clock (public Clock())
+        System.out.println("Testing Clock()");
+        Clock testClock = new Clock();
+        try {
+            displaySuccessIfTrue(testClock.getHours() == 12);
+        } catch (Exception e) {
+            displayFailure();
+        }
+        try {
+            displaySuccessIfTrue(testClock.getMinutes() == 0);
+        } catch (Exception e) {
+            displayFailure();
+        }
+        try {
+            displaySuccessIfTrue(testClock.getSeconds() == 0);
+        } catch (Exception e) {
+            displayFailure();
+        }
+        try {
+            displaySuccessIfTrue(testClock.getGrain() == 1.0);
+        } catch (Exception e) {
+            displayFailure();
+        }
+
+        //tests the second clock (Clock(int hours))
+        System.out.println("Testing Clock(int hours)");
+        Clock testClock2 = new Clock(2);
+        try {
+            displaySuccessIfTrue(testClock2.getHours() == 2);
+        } catch (Exception e) {
+            displayFailure();
+        }
+        try {
+            displaySuccessIfTrue(testClock2.getMinutes() == 0);
+        } catch (Exception e) {
+            displayFailure();
+        }
+        try {
+            displaySuccessIfTrue(testClock2.getSeconds() == 0);
+        } catch (Exception e) {
+            displayFailure();
+        }
+        try {
+            displaySuccessIfTrue(testClock2.getGrain() == 1.0);
+        } catch (Exception e) {
+            displayFailure();
+        }
+
+        //tests the third clock (Clock(int hours, int minutes))
+        System.out.println("Testing Clock(int hours, int minutes)");
+        Clock testClock3 = new Clock(2, 20);
+        try {
+            displaySuccessIfTrue(testClock3.getHours() == 2);
+        } catch (Exception e) {
+            displayFailure();
+        }
+        try {
+            displaySuccessIfTrue(testClock3.getMinutes() == 20);
+        } catch (Exception e) {
+            displayFailure();
+        }
+        try {
+            displaySuccessIfTrue(testClock3.getSeconds() == 0);
+        } catch (Exception e) {
+            displayFailure();
+        }
+        try {
+            displaySuccessIfTrue(testClock3.getGrain() == 1.0);
+        } catch (Exception e) {
+            displayFailure();
+        }
+
+        //tests the fourth clock (Clock(int hours, int minutes, double seconds))
+        System.out.println("Testing Clock(int hours, int minutes, double seconds)");
+        Clock testClock4 = new Clock(2, 20, 30);
+        try {
+            displaySuccessIfTrue(testClock4.getHours() == 2);
+        } catch (Exception e) {
+            displayFailure();
+        }
+        try {
+            displaySuccessIfTrue(testClock4.getMinutes() == 20);
+        } catch (Exception e) {
+            displayFailure();
+        }
+        try {
+            displaySuccessIfTrue(testClock4.getSeconds() == 30);
+        } catch (Exception e) {
+            displayFailure();
+        }
+        try {
+            displaySuccessIfTrue(testClock4.getGrain() == 1.0);
+        } catch (Exception e) {
+            displayFailure();
+        }
+
+        //tests the fifth clock (Clock(int hours, int minutes, double seconds, double grain))
+        System.out.println("Testing Clock(int hours, int minutes, double seconds, double grain)");
+        Clock testClock5 = new Clock(2, 20, 30, 5.5);
+        try {
+            displaySuccessIfTrue(testClock5.getHours() == 2);
+        } catch (Exception e) {
+            displayFailure();
+        }
+        try {
+            displaySuccessIfTrue(testClock5.getMinutes() == 20);
+        } catch (Exception e) {
+            displayFailure();
+        }
+        try {
+            displaySuccessIfTrue(testClock5.getSeconds() == 30);
+        } catch (Exception e) {
+            displayFailure();
+        }
+        try {
+            displaySuccessIfTrue(testClock5.getGrain() == 5.5);
+        } catch (Exception e) {
+            displayFailure();
+        }
+
 
         System.out.println();
     }
