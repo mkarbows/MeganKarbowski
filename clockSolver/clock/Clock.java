@@ -12,6 +12,7 @@ public class Clock {
     private int minutes;
     private double seconds;
     private double grain;
+    private double secondsPassed;
 
     public Clock() {
         // TODO: Finish this and the other constructors.
@@ -37,21 +38,22 @@ public class Clock {
         }
     }
     public int getHours() {
-        return -1;
+        return this.hours;
     }
     public int getMinutes() {
-        return -1;
+        return this.minutes;    
     }
     public double getSeconds() {
-        return -1;
+        return this.seconds;
     }
     public double getGrain() {
-        return -1;
+        return this.grain;
     }
     public double getSecondsPassed() {
-        return -1;
+        return this.secondsPassed; //fix
     }
     public void tick() {
+
 
     }
 
