@@ -12,23 +12,23 @@ public class Clock {
     private int minutes;
     private double seconds;
     private double grain;
-    private double secondsPassed;
+    private double secondsPassed = 0.0;
 
     public Clock() {
         // TODO: Finish this and the other constructors.
-        this(12, 0, 0, 1.0);
+        this(12, 0, 0.0, 1.0);
     }
     public Clock(int hours) {
-        this(hours, 0, 0, 1.0);
+        this(hours, 0, 0.0, 1.0);
     }
     public Clock(int hours, int minutes) {
-        this(hours, minutes, 0, 0.1);
+        this(hours, minutes, 0.0, 1.0);
     }
     public Clock(int hours, int minutes, double seconds) {
         this(hours, minutes, seconds, 1.0);
     }
     public Clock(int hours, int minutes, double seconds, double grain) {
-        if ((hours >= 1 || hours <= 12) && (minutes >= 0 || minutes <= 60) && (seconds >= 0 || seconds <= 60) && (grain > 0)) {
+        if ((hours >= 1 || hours <= 12) && (minutes >= 0 || minutes <= 60) && (seconds >= 0.0 || seconds <= 60.0) && (grain > 0.0)) {
             this.hours = hours;
             this.minutes = minutes;
             this.seconds = seconds;
@@ -50,10 +50,19 @@ public class Clock {
         return this.grain;
     }
     public double getSecondsPassed() {
-        return this.secondsPassed; //fix
+        return -1; //finish
     }
     public void tick() {
-
+        seconds += grain;
+        secondsPassed += grain;
+        minutes += this.seconds / 60;
+        System.out.println(minutes);
+        seconds = this.seconds % 60;
+        hours = (hours + (minutes / 60)) % 12;
+        minutes = this.minutes % 60;
+        if (this.hours == 0) {
+            this.hours = 12;
+        }
 
     }
 
