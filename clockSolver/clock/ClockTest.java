@@ -159,17 +159,17 @@ public class ClockTest {
 
         //tests clock with 59 seconds and grain=2.0
         Clock tickClock2 = new Clock(2, 30, 59.0, 2.0);
-        tickClock.tick();
+        tickClock2.tick();
         try {
             displaySuccessIfTrue(tickClock2.getHours() == 2 && tickClock2.getMinutes() == 31 && 
-                tickClock2.getSeconds() == 1.0 && tickClock.getGrain() == 2.0);
+                tickClock2.getSeconds() == 1.0 && tickClock2.getGrain() == 2.0);
         } catch (Exception e) {
             displayFailure();
         }
 
         //tests clock with 59 minutes and ...
         Clock tickClock3 = new Clock(2, 59, 58.0, 2.0);
-        tickClock.tick();
+        tickClock3.tick();
         try {
             displaySuccessIfTrue(tickClock3.getHours() == 3 && tickClock3.getMinutes() == 0 &&
                 tickClock3.getSeconds() == 0.0 && tickClock3.getGrain() == 2.0);
