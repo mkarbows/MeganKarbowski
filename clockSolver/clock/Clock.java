@@ -50,7 +50,7 @@ public class Clock {
         return this.grain;
     }
     public double getSecondsPassed() {
-        return -1; //finish
+        return this.secondsPassed;
     }
     public void tick() {
         seconds += grain;
@@ -63,7 +63,6 @@ public class Clock {
         if (this.hours == 0) {
             this.hours = 12;
         }
-
     }
 
 
