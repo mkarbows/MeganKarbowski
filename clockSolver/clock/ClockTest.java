@@ -94,7 +94,7 @@ public class ClockTest {
             for (int i = 0; i < 3; i++) {
                 secPassClock.tick();
             }
-            displaySuccessIfTrue(secPassClock.getSecondsPassed() == 18.0);
+            displaySuccessIfTrue(compareDoubles(secPassClock.getSecondsPassed(), 18.0));
         } catch (Exception e) {
             displayFailure();
         }
@@ -105,7 +105,7 @@ public class ClockTest {
             for (int i = 0; i < 4; i++) {
                 secPassClock2.tick();
             }
-            displaySuccessIfTrue(secPassClock2.getSecondsPassed() == 2.0);
+            displaySuccessIfTrue(compareDoubles(secPassClock2.getSecondsPassed(), 2.0));
         } catch (Exception e) {
             displayFailure();
         }
@@ -116,7 +116,7 @@ public class ClockTest {
             for (int i = 0; i < 3; i++) {
                 secPassClock3.tick();
             }
-            displaySuccessIfTrue(secPassClock3.getSecondsPassed() == 0.45);
+            displaySuccessIfTrue(compareDoubles(secPassClock3.getSecondsPassed(), 0.45));
         } catch (Exception e) {
             displayFailure();
         }
@@ -127,7 +127,7 @@ public class ClockTest {
             for (int i = 0; i < 3; i++) {
                 secPassClock4.tick();
             }
-            displaySuccessIfTrue(secPassClock4.getSecondsPassed() == 120.0);
+            displaySuccessIfTrue(compareDoubles(secPassClock4.getSecondsPassed(), 120.0));
         } catch (Exception e) {
             displayFailure();
         }
