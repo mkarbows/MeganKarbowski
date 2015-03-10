@@ -202,6 +202,67 @@ public class ClockTest {
 
         // TODO: It's lonely here. Add some tests.
 
+        //checks if the clock is initialized properly
+        Clock csClock = new Clock(12, 0, 0.0, 1.0);
+        try {
+            displaySuccessIfTrue(csClock.getHours() == 12 && csClock.getMinutes() == 0 && 
+                csClock.getSeconds() == 0.0 && csClock.getGrain() == 1.0);
+        } catch (Exception e) {
+            displayFailure();
+        }
+
+        //checks the angleToFind
+        try {
+            ClockSolver angleClock = new ClockSolver(-34.0);
+            displayFailure();
+        } catch (Exception e) {
+            displaySuccessIfTrue(true);
+        }
+
+        //checks negative grain
+        try {
+            ClockSolver negGrain = new ClockSolver(34.0, -5);
+            displayFailure();
+        } catch (Exception e) {
+            displaySuccessIfTrue(true);
+        }
+
+        //checks grain set to zero
+        try {
+            ClockSolver zeroGrain = new ClockSolver(34.0, 0);
+            displayFailure();
+        } catch (Exception e) {
+            displaySuccessIfTrue(true);
+        }
+
+        //checks large grain
+        try {
+            ClockSolver largeGrain = new ClockSolver(34.0, 1801);
+            displayFailure();
+        } catch (Exception e) {
+            displaySuccessIfTrue(true);
+        }
+
+        //checking if angle and grain are wrong
+        try {
+            ClockSolver badClock = new ClockSolver(-34.0, -5);
+            displayFailure();
+        } catch (Exception e) {
+            displaySuccessIfTrue(true);
+        }
+        try {
+            ClockSolver badClock2 = new ClockSolver(-34.0, 0);
+            displayFailure();
+        } catch (Exception e) {
+            displaySuccessIfTrue(true);
+        }
+        try {
+            ClockSolver badClock3 = new ClockSolver(-34.0, 1801);
+            displayFailure();
+        } catch (Exception e) {
+            displaySuccessIfTrue(true);
+        }
+
         System.out.println();
     }
 
