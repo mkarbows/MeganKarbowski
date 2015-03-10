@@ -65,13 +65,26 @@ public class Clock {
         }
     }
 
-
     // TODO: Add missing methods and constructors.
 
     @Override
     public String toString() {
         // TODO: Finish this method.
-        return "";
+        if (getHours() < 10) {
+            String hours = "0" + getHours();
+        } else {
+            String hours = "" + getHours();
+        }
+        if (getMinutes() < 10) {
+            String minutes = "0" + getMinutes();
+        } else {
+            String minutes = "" + getMinutes();
+        }
+        if (getSeconds() < 10) {
+            String seconds = "0" + getSeconds();
+        } else {
+            String seconds = "" + getSeconds();
+        }
+        return hours + ":" + minutes + ":" + seconds;
     }
-
 }
