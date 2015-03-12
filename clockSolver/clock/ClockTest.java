@@ -34,8 +34,6 @@ public class ClockTest {
      */
     private static void test_clockConstructors() {
         System.out.println("Testing Clock Constructors...");
-
-        // TODO: It's lonely here. Add some tests.
         
         //tests the first clock (public Clock())
         System.out.println("Testing Clock()");
@@ -145,8 +143,6 @@ public class ClockTest {
     private static void test_tick() {
         System.out.println("Testing tick...");
 
-        // TODO: It's lonely here. Add some tests.
-
         //this tests a basic clock at time 2:30:00
         Clock tickClock = new Clock(2, 30, 0.0, 1.0);
         tickClock.tick();
@@ -187,7 +183,6 @@ public class ClockTest {
             displayFailure();
         }
 
-
         System.out.println();
     }
 
@@ -199,8 +194,6 @@ public class ClockTest {
      */
     private static void test_clockSolverConstructors() {
         System.out.println("Testing ClockSolver Constructors...");
-
-        // TODO: It's lonely here. Add some tests.
 
         //checks if the clock is initialized properly and angleToFind and getAngleBetween 
         ClockSolver csClock = new ClockSolver(20.0, 1.0);
@@ -215,52 +208,66 @@ public class ClockTest {
         try {
             ClockSolver angleClock = new ClockSolver(-34.0);
             displayFailure();
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             displaySuccessIfTrue(true);
+        } catch (Exception e) {
+            displaySuccessIfTrue(false);
         }
 
         //checks negative grain
         try {
             ClockSolver negGrain = new ClockSolver(34.0, -5);
             displayFailure();
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             displaySuccessIfTrue(true);
+        } catch (Exception e) {
+            displaySuccessIfTrue(false);
         }
 
         //checks grain set to zero
         try {
             ClockSolver zeroGrain = new ClockSolver(34.0, 0);
             displayFailure();
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             displaySuccessIfTrue(true);
+        } catch (Exception e) {
+            displaySuccessIfTrue(false);
         }
 
         //checks large grain
         try {
             ClockSolver largeGrain = new ClockSolver(34.0, 1801);
             displayFailure();
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             displaySuccessIfTrue(true);
+        } catch (Exception e) {
+            displaySuccessIfTrue(false);
         }
 
         //checking if angle AND grain are wrong
         try {
             ClockSolver badClock = new ClockSolver(-34.0, -5);
             displayFailure();
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             displaySuccessIfTrue(true);
+        } catch (Exception e) {
+            displaySuccessIfTrue(false);
         }
         try {
             ClockSolver badClock2 = new ClockSolver(-34.0, 0);
             displayFailure();
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             displaySuccessIfTrue(true);
+        } catch (Exception e) {
+            displaySuccessIfTrue(false);
         }
         try {
             ClockSolver badClock3 = new ClockSolver(-34.0, 1801);
             displayFailure();
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             displaySuccessIfTrue(true);
+        } catch (Exception e) {
+            displaySuccessIfTrue(false);
         }
 
         System.out.println();
@@ -273,7 +280,6 @@ public class ClockTest {
     private static void test_foundAngle() {
         System.out.println("Testing foundAngle...");
 
-        // TODO: It's lonely here. Add some tests.
         ClockSolver goodClock = new ClockSolver(180.0, 1800);
         try {  
             for (int i = 0; i < 12; i++) {
@@ -344,7 +350,6 @@ public class ClockTest {
             displayFailure();
         }
 
-
         System.out.println();
     }
 
@@ -356,5 +361,4 @@ public class ClockTest {
     private static boolean compareDoubles(double real1, double real2) {
         return Math.abs(real1 - real2) < 0.00001;
     }
-
 }
