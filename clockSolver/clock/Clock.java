@@ -56,7 +56,6 @@ public class Clock {
         seconds += grain;
         secondsPassed += grain;
         minutes += this.seconds / 60;
-        System.out.println(minutes);
         seconds = this.seconds % 60;
         hours = (hours + (minutes / 60)) % 12;
         minutes = this.minutes % 60;
@@ -70,20 +69,23 @@ public class Clock {
     @Override
     public String toString() {
         // TODO: Finish this method.
+        String hours;
+        String minutes;
+        String seconds;
         if (getHours() < 10) {
-            String hours = "0" + getHours();
+            hours = "0" + getHours();
         } else {
-            String hours = "" + getHours();
+            hours = "" + getHours();
         }
         if (getMinutes() < 10) {
-            String minutes = "0" + getMinutes();
+            minutes = "0" + getMinutes();
         } else {
-            String minutes = "" + getMinutes();
+            minutes = "" + getMinutes();
         }
         if (getSeconds() < 10) {
-            String seconds = "0" + getSeconds();
+            seconds = "0" + getSeconds();
         } else {
-            String seconds = "" + getSeconds();
+            seconds = "" + getSeconds();
         }
         return hours + ":" + minutes + ":" + seconds;
     }
