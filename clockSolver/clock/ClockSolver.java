@@ -7,7 +7,6 @@ package clock;
  */
 public class ClockSolver {
 
-    // TODO: Add instance variables/constants here.
     private Clock clock;
     private double angleBetween;
     private double goalAngle;
@@ -18,7 +17,6 @@ public class ClockSolver {
      * passes the DEFAULT_GRAIN to the Clock constructor.
      */
     public ClockSolver(double angleToFind) {
-        // TODO: Finish this constructor.
         this(angleToFind, 1.0);        
     }
     public ClockSolver(double angleToFind, double grain) {
@@ -48,10 +46,8 @@ public class ClockSolver {
             (360 - angleBetween >= this.goalAngle - ((5.5/60)*this.clock.getGrain()/2) &&
             360 - angleBetween < this.goalAngle + ((5.5/60)*this.clock.getGrain()/2));
     }
-    // TODO: Add other constructor and methods.
 
     public static void main(String[] args) {
-        // TODO: Print some stuff here.
         if (args.length == 0 || args.length > 2) {
             System.out.println("Usage: java clock.ClockSolver <angleToFind> <grain(optional)>");
             return;
@@ -71,13 +67,15 @@ public class ClockSolver {
         if (angleToFind > 360) {
             angleToFind %= 360;
         }
-
+        if (args.length < 2) {
+            System.out.println("Grain not give. Set to defaul of 1.0");
+        }
         try { 
             if (args.length == 2) {
-               grain = Double.parseDouble(args[1]); 
+                grain = Double.parseDouble(args[1]); 
             } 
         } catch (NumberFormatException e) {
-                System.out.println("Grain not a number. Using default: 1.0s");
+            System.out.println("Grain not a number. Using default: 1.0s");
         }
         if (grain <= 0) {
             System.out.println("Grain must be > 0.0. Using default: 1.0s");
