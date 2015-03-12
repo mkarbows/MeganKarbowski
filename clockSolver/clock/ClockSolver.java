@@ -68,19 +68,22 @@ public class ClockSolver {
             angleToFind %= 360;
         }
         if (args.length < 2) {
-            System.out.println("Grain not give. Set to defaul of 1.0");
+            System.out.println("Grain not give. Set to default of 1.0s");
         }
         try { 
             if (args.length == 2) {
                 grain = Double.parseDouble(args[1]); 
             } 
         } catch (NumberFormatException e) {
+            grain = 1.0;
             System.out.println("Grain not a number. Using default: 1.0s");
         }
         if (grain <= 0) {
+            grain = 1.0;
             System.out.println("Grain must be > 0.0. Using default: 1.0s");
         }
         if (grain > 1800.0) {
+            grain = 1.0;
             System.out.println("Grain must be <= 1800.0s. Using default: 1.0s");
         }
 
