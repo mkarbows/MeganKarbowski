@@ -87,6 +87,11 @@ public class ClockSolver {
         }
 
         ClockSolver finalClock = new ClockSolver(angleToFind, grain);
-        //for (int i = 0; i < )
+        while (finalClock.getSecondsPassed() < 12*60*60){
+            if (finalClock.foundAngle()){
+                System.out.println(finalClock.clock.toString());
+            }
+            finalClock.tickClock();
+        }
     }
 }
