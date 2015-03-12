@@ -42,7 +42,7 @@ public class ClockTest {
         Clock testClock = new Clock();
         try {
             displaySuccessIfTrue(testClock.getHours() == 12 && testClock.getMinutes() == 0 &&
-                testClock.getSeconds() == 0 && testClock.getGrain() == 1.0);
+                testClock.getSeconds() == 0.0 && testClock.getGrain() == 1.0);
         } catch (Exception e) {
             displayFailure();
         }
@@ -202,11 +202,11 @@ public class ClockTest {
 
         // TODO: It's lonely here. Add some tests.
 
-        //checks if the clock is initialized properly
-        Clock csClock = new Clock(12, 0, 0.0, 1.0);
+        //checks if the clock is initialized properly and angleToFind and getAngleBetween 
+        ClockSolver csClock = new ClockSolver(20.0, 1.0);
         try {
-            displaySuccessIfTrue(csClock.getHours() == 12 && csClock.getMinutes() == 0 && 
-                csClock.getSeconds() == 0.0 && csClock.getGrain() == 1.0);
+            displaySuccessIfTrue(csClock.getClockTime().equals("12:00:00.0") &&
+                csClock.getAngleBetween() == 0);
         } catch (Exception e) {
             displayFailure();
         }
@@ -243,7 +243,7 @@ public class ClockTest {
             displaySuccessIfTrue(true);
         }
 
-        //checking if angle and grain are wrong
+        //checking if angle AND grain are wrong
         try {
             ClockSolver badClock = new ClockSolver(-34.0, -5);
             displayFailure();
@@ -274,6 +274,76 @@ public class ClockTest {
         System.out.println("Testing foundAngle...");
 
         // TODO: It's lonely here. Add some tests.
+        ClockSolver goodClock = new ClockSolver(180.0, 1800);
+        try {  
+            for (int i = 0; i < 12; i++) {
+                goodClock.tickClock();
+            } 
+            displaySuccessIfTrue(goodClock.foundAngle());
+        } catch (Exception e) {
+            displayFailure();
+        }
+        try {
+            goodClock.tickClock();
+            displaySuccessIfTrue(!goodClock.foundAngle());
+        } catch (Exception e) {
+            displayFailure();
+        }
+
+        ClockSolver goodClock2 = new ClockSolver(270.0, 1800);
+        try {
+            for (int i = 0; i < 18; i++) {
+                goodClock2.tickClock();
+            }
+            displaySuccessIfTrue(goodClock2.foundAngle());
+        } catch (Exception e) {
+            displayFailure();
+        }
+        try {
+            for (int i = 0; i < 6; i++) {
+                goodClock2.tickClock();
+            }
+            displaySuccessIfTrue(!goodClock2.foundAngle());
+        } catch (Exception e) {
+            displayFailure();
+        }
+
+        ClockSolver goodClock3 = new ClockSolver(37.5, 1.0);
+        try {
+            for (int i = 0; i < 15300; i++) {
+                goodClock3.tickClock();
+            }
+            displaySuccessIfTrue(goodClock3.foundAngle());
+        } catch (Exception e) {
+            displayFailure();
+        }
+        try {
+            for (int i = 0; i < 15302; i++) {
+                goodClock3.tickClock();
+            }
+            displaySuccessIfTrue(!goodClock3.foundAngle());
+        } catch (Exception e) {
+            displayFailure();
+        }
+
+        ClockSolver goodClock4 = new ClockSolver(63.50833, 1.0);
+        try {
+            for (int i = 0; i < 32111; i++) {
+                goodClock4.tickClock();
+            }
+            displaySuccessIfTrue(goodClock4.foundAngle());
+        } catch (Exception e) {
+            displayFailure();
+        }
+        try {
+            for (int i = 0; i < 32110; i++) {
+                goodClock4.tickClock();
+            }
+            displaySuccessIfTrue(!goodClock4.foundAngle());
+        } catch (Exception e) {
+            displayFailure();
+        }
+
 
         System.out.println();
     }
