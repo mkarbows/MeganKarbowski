@@ -64,11 +64,8 @@ public class Clock {
         }
     }
 
-    // TODO: Add missing methods and constructors.
-
     @Override
     public String toString() {
-        // TODO: Finish this method.
         String hours;
         String minutes;
         String seconds;
