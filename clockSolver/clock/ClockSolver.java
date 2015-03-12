@@ -49,7 +49,7 @@ public class ClockSolver {
 
     public static void main(String[] args) {
         if (args.length == 0 || args.length > 2) {
-            System.out.println("Usage: java clock.ClockSolver <angleToFind> <grain(optional)>");
+            System.out.println("Usage: java clock.ClockSolver <angleToFind> [ <grain> ]");
             return;
         }
         double angleToFind = -1;
@@ -66,6 +66,7 @@ public class ClockSolver {
         }
         if (angleToFind > 360) {
             angleToFind %= 360;
+            System.out.println("Angle too large. Converted to: " + angleToFind);
         }
         if (args.length < 2) {
             System.out.println("Grain not give. Set to default of 1.0s");
