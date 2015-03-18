@@ -96,16 +96,17 @@ public class BFInt {
 
     public boolean isEqualTo(BFInt other) {
         // TODO: Finish me, pretty please.
-        if (this.digits.length.isEqualTo(other.digits.length) &&
-            this.negative.isEqualTo(other.negative)) {
-            for (int i = 0; i < other.length; i++) {
-                this.digits[i].isEqualTo(other.digits[i]);
-                return true;
-            }
-        return true;
-        } else {
-            return false;
-        }
+        //if (this.digits.length == other.digits.length &&
+            //this.negative == other.negative) {
+            //for (int i = 0; i < other.length; i++) {
+                //this.digits[i] == other.digits[i]);
+                //return true;
+            //}
+        //return true;
+        //} else {
+            //return false;
+        //}
+        return false;
     }
 
     public boolean isGreaterThan(BFInt other) {
@@ -122,7 +123,7 @@ public class BFInt {
      * Returns true if the this BFInt is negative.
      */
      public boolean isNegative() {
-         return false;
+        return this.negative;
      }
 
     /**
@@ -180,6 +181,7 @@ public class BFInt {
     @Override
     public String toString() {
         // TODO: Finish me, pretty please.
+
         return "";
     }
 
