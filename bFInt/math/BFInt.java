@@ -16,19 +16,19 @@ public class BFInt {
     /**
      * A constant for a BFInt with a value of 0.
      */
-    public static final BFInt ZERO = null;
+    public static final BFInt ZERO = new BFInt("0");
     /**
     * A constant for a BFInt with a value of -1.
     */
-    public static final BFInt NEGATIVE_ONE = null;
+    public static final BFInt NEGATIVE_ONE = new BFInt("-1");
     /**
     * A constant for a BFInt with a value of 1.
     */
-    public static final BFInt ONE = null;
+    public static final BFInt ONE = new BFInt("1");
     /**
     * A constant for a BFInt with a value of 10.
     */
-    public static final BFInt TEN = null;
+    public static final BFInt TEN = new BFInt("10");
 
     // These are the private instance variables for BFInt. You can change these if you
     // have a different idea for how to represent a BFInt object.
@@ -96,7 +96,16 @@ public class BFInt {
 
     public boolean isEqualTo(BFInt other) {
         // TODO: Finish me, pretty please.
-        return false;
+        if (this.digits.length.isEqualTo(other.digits.length) &&
+            this.negative.isEqualTo(other.negative)) {
+            for (int i = 0; i < other.length; i++) {
+                this.digits[i].isEqualTo(other.digits[i]);
+                return true;
+            }
+        return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean isGreaterThan(BFInt other) {
