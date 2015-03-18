@@ -37,30 +37,61 @@ public class BFInt {
 
     public BFInt() {
         // TODO: Finish me, pretty please.
+        this("0");
     }
 
     public BFInt(int number) {
         // TODO: Finish me, pretty please.
+        this("" + number);
     }
 
     public BFInt(long number) {
         // TODO: Finish me, pretty please.
+        this("" + number);
     }
 
     public BFInt(short number) {
         // TODO: Finish me, pretty please.
+        this("" + number);
     }
 
     public BFInt(byte number) {
         // TODO: Finish me, pretty please.
+        this("" + number);
     }
 
     public BFInt(BFInt bFInt) {
         // TODO: Finish me, pretty please.
+        this("" + bFInt);
     }
 
     public BFInt(String numberString) {
         // TODO: Finish me, pretty please.
+        try {
+            String copyString = numberString;
+            if (copyString.substring(0, 1).equals("-")) {
+                negative = true;
+                copyString = copyString.substring(1);
+            } else if (copyString.substring(0, 1).equals("+")) {
+                negative = false;
+                copyString = copyString.substring(1);
+            } else {
+                negative = false;
+            }
+            String firstChar = copyString.substring(0, 1);
+            while (firstChar.equals("0") && copyString.length() != 1) {
+                copyString = copyString.substring(1);
+                firstChar = copyString.substring(0, 1);
+            }
+            digits = new byte[copyString.length()];
+            for (int i = 0; i < copyString.length(); i++) {
+                String currentChar = copyString.substring(i, i + 1);
+                byte currentDigit = Byte.parseByte(currentChar);
+                digits[i] = currentDigit;
+            }    
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException();
+        }
     }
 
     public boolean isEqualTo(BFInt other) {
