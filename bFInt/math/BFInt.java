@@ -62,7 +62,8 @@ public class BFInt {
 
     public BFInt(BFInt bFInt) {
         // TODO: Finish me, pretty please.
-        this("" + bFInt);
+        //this("" + bFInt);
+
     }
 
     public BFInt(String numberString) {
@@ -71,16 +72,16 @@ public class BFInt {
             String copyString = numberString;
             if (copyString.substring(0, 1).equals("-")) {
                 negative = true;
-                copyString = copyString.substring(1);
+                copyString = copyString.substring(1); //had it as 1 first
             } else if (copyString.substring(0, 1).equals("+")) {
                 negative = false;
-                copyString = copyString.substring(1);
+                copyString = copyString.substring(1); //had it as 1 first
             } else {
                 negative = false;
             }
             String firstChar = copyString.substring(0, 1);
             while (firstChar.equals("0") && copyString.length() != 1) {
-                copyString = copyString.substring(1);
+                copyString = copyString.substring(1);//had it has 1 first
                 firstChar = copyString.substring(0, 1);
             }
             digits = new byte[copyString.length()];
@@ -96,18 +97,17 @@ public class BFInt {
 
     public boolean isEqualTo(BFInt other) {
         // TODO: Finish me, pretty please.
-        //if (this.digits.length == other.digits.length &&
-            //this.negative == other.negative) {
-            //for (int i = 0; i < other.length; i++) {
-                //this.digits[i] == other.digits[i]);
-                //return true;
-            //}
-        //return true;
-        //} else {
-            //return false;
-        //}
-        return false;
-    }
+        if ((this.digits.length != other.digits.length) ||
+            (this.negative != other.negative)) {
+            return false;
+        }
+        for (int i = 0; i < other.digits.length; i++) {
+            if (this.digits[i] != other.digits[i]) {
+                return false;
+            }
+        }
+        return true;
+    } 
 
     public boolean isGreaterThan(BFInt other) {
         // TODO: Finish me, pretty please.
