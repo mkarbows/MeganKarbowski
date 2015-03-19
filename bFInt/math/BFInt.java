@@ -72,16 +72,16 @@ public class BFInt {
             String copyString = numberString;
             if (copyString.substring(0, 1).equals("-")) {
                 negative = true;
-                copyString = copyString.substring(1); //had it as 1 first
+                copyString = copyString.substring(1);
             } else if (copyString.substring(0, 1).equals("+")) {
                 negative = false;
-                copyString = copyString.substring(1); //had it as 1 first
+                copyString = copyString.substring(1);
             } else {
                 negative = false;
             }
             String firstChar = copyString.substring(0, 1);
             while (firstChar.equals("0") && copyString.length() != 1) {
-                copyString = copyString.substring(1);//had it has 1 first
+                copyString = copyString.substring(1);
                 firstChar = copyString.substring(0, 1);
             }
             digits = new byte[copyString.length()];
@@ -131,7 +131,8 @@ public class BFInt {
      */
     public BFInt abs() {
         // TODO: Finish me, pretty please.
-        return null;
+        this.negative = false;
+        return this;
     }
 
     // TODO: Add missing methods that are in the specs here.
