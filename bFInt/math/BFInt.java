@@ -114,10 +114,12 @@ public class BFInt {
         // TODO: Finish me, pretty please.
         if ((this.digits.length > other.digits.length && this.negative == other.negative && !this.negative) ||
             (this.negative == other.negative && this.negative && this.digits.length < other.digits.length) ||
-            (this.digits.length < other.digits.length && this.negative == other.negative && this.negative)) {
+            (this.digits.length < other.digits.length && this.negative == other.negative && this.negative) ||
+            (!this.negative && other.negative)) {
             return true;
         } else if ((this.digits.length < other.digits.length && !this.negative && this.negative == other.negative) ||
-            (this.negative == other.negative && this.negative && this.digits.length > other.digits.length)) {
+            (this.negative == other.negative && this.negative && this.digits.length > other.digits.length) ||
+            (this.negative && !other.negative)) {
             return false;
         }
         if (this.digits[0] == 0 && other.negative) {
