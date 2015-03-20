@@ -62,7 +62,7 @@ public class BFInt {
 
     public BFInt(BFInt bFInt) {
         // TODO: Finish me, pretty please.
-        //this("" + bFInt);
+        this("" + bFInt);
 
     }
 
@@ -70,6 +70,7 @@ public class BFInt {
         // TODO: Finish me, pretty please.
         try {
             String copyString = numberString;
+            copyString = copyString.trim();
             if (copyString.substring(0, 1).equals("-")) {
                 negative = true;
                 copyString = copyString.substring(1);
@@ -111,12 +112,42 @@ public class BFInt {
 
     public boolean isGreaterThan(BFInt other) {
         // TODO: Finish me, pretty please.
+        if ((this.digits.length > other.digits.length && this.negative == other.negative && !this.negative) ||
+            (this.negative == other.negative && this.negative && this.digits.length < other.digits.length) ||
+            (this.digits.length < other.digits.length && this.negative == other.negative && this.negative)) {
+            return true;
+        } else if ((this.digits.length < other.digits.length && !this.negative && this.negative == other.negative) ||
+            (this.negative == other.negative && this.negative && this.digits.length > other.digits.length)) {
+            return false;
+        }
+        if (this.digits[0] == 0 && other.negative) {
+            return true;
+        }
+        if (this.negative == other.negative && !this.negative) {
+
+            for (int i = 0; i < this.digits.length; i++) {
+                if (this.digits[i] > other.digits[i]) { 
+                    return true;
+                } else if (this.digits[i] < other.digits[i]) {
+                    return false;
+                }
+            } 
+            return false;
+        }
+        if (this.negative == other.negative && this.negative) {
+            for (int i = 0; i < this.digits.length; i++) {
+                if (this.digits[i] < other.digits[i]) {
+                    return true;
+                }
+            }
+            return false;
+        }
         return false;
     }
 
     public boolean isLessThan(BFInt other) {
         // TODO: Finish me, pretty please.
-        return false;
+        return !isEqualTo(other) && !isGreaterThan(other);
     }
 
     /**
@@ -182,8 +213,11 @@ public class BFInt {
     @Override
     public String toString() {
         // TODO: Finish me, pretty please.
-
-        return "";
+        String result = negative ? "-" : /*((digits.length == 1) && (digits[0] == 0) ? "" : "+")*/ "";
+        for (int i = 0; i < digits.length; i++) {
+            result += digits[i];
+        }
+        return result;
     }
 
 
