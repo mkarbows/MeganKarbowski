@@ -381,6 +381,30 @@ public class BFIntTest {
             e.printStackTrace();
         }
 
+        try {
+            displaySuccessIfTrue(new BFInt("120").isGreaterThan(new BFInt("108")),
+                    testNumber++);
+        } catch (Exception e) {
+            displayFailure(testNumber++);
+            e.printStackTrace();
+        }
+
+        try {
+            displaySuccessIfTrue(!new BFInt("108").isGreaterThan(new BFInt("120")),
+                    testNumber++);
+        } catch (Exception e) {
+            displayFailure(testNumber++);
+            e.printStackTrace();
+        }
+
+        try {
+            displaySuccessIfTrue(!new BFInt("-120").isGreaterThan(new BFInt("-108")),
+                    testNumber++);
+        } catch (Exception e) {
+            displayFailure(testNumber++);
+            e.printStackTrace();
+        }
+
         System.out.println();
     }
 
@@ -1182,7 +1206,7 @@ public class BFIntTest {
         divisor = new BFInt("0");
 
         try {
-            BFInt remainder = dividend.mod(divisor);
+            BFInt remainder = dividend.dividedBy(divisor);
             displayFailure(testNumber++);
         } catch (IllegalArgumentException iae) {
             displaySuccessIfTrue(true, testNumber);
