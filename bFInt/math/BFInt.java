@@ -87,7 +87,7 @@ public class BFInt {
             }
             digits = new byte[copyString.length()];
             for (int i = 0; i < copyString.length(); i++) {
-                String currentChar = copyString.substring(i, i + 1);
+                String currentChar = copyString.substring(copyString.length() - 1 - i, copyString.length() - i);
                 byte currentDigit = Byte.parseByte(currentChar);
                 digits[i] = currentDigit;
             }    
@@ -122,12 +122,12 @@ public class BFInt {
             (this.negative && !other.negative)) {
             return false;
         }
-        if (this.digits[0] == 0 && other.negative) {
+        if (this.digits[0] == 0 && other.negative && this.digits.length == 1) {
             return true;
         }
         if (this.negative == other.negative && !this.negative) {
 
-            for (int i = 0; i < this.digits.length; i++) {
+            for (int i = this.digits.length - 1; i >= 0; i--) {
                 if (this.digits[i] > other.digits[i]) { 
                     return true;
                 } else if (this.digits[i] < other.digits[i]) {
@@ -137,7 +137,7 @@ public class BFInt {
             return false;
         }
         if (this.negative == other.negative && this.negative) {
-            for (int i = 0; i < this.digits.length; i++) {
+            for (int i = this.digits.length - 1; i >= 0; i--) {
                 if (this.digits[i] < other.digits[i]) {
                     return true;
                 }
@@ -175,15 +175,115 @@ public class BFInt {
     */
     public BFInt plus(BFInt addend) {
         // TODO: Finish me, pretty please.
-        return null;
+        //make a carry byte, not an array
+        //byte[] sum = new byte[this.digits.length +1];
+        //make a longer byte[] and shorter byte[] initialized to zero
+        //if this is negative and addend is positive, then you do addend.minus()
+        byte carry = 0;
+        byte[] sum = new byte[this.digits.length + 1];
+        byte[] longer = null;
+        byte[] shorter = null;
+
+        if (this.digits.length == addend.digits.length && this.negative == addend.negative) {
+            for (int i = 0; i < this.digits.length; i++) {
+                sum[i] = (byte) (this.digits[i] + addend.digits[i] + carry);
+                carry = (byte) (sum[i] / 10);
+                sum[i] = (byte) (sum[i] % 10);
+            }
+            if (carry > 0) {
+                sum[sum.length - 1] = carry;
+            }
+        } else if (this.digits.length != addend.digits.length && this.negative == addend.negative && (!this.negative || this.negative)) {
+            if (this.digits.length > addend.digits.length) {
+                longer = this.digits;
+                shorter = addend.digits;
+            } else {
+                longer = addend.digits;
+                shorter = this.digits;
+            }
+            sum = new byte[longer.length + 1];
+            for (int i = 0; i < shorter.length; i++) {
+                sum[i] = (byte) (longer[i] + shorter[i] + carry);
+                carry = (byte) (sum[i] / 10);
+                sum[i] = (byte) (sum[i] % 10);
+            }
+            for (int i = shorter.length; i < longer.length; i++) {
+                sum[i] = (byte) (longer[i] + carry);
+                carry = (byte) (sum[i] / 10);
+                sum[i] = (byte) (sum[i] % 10);
+            }
+            sum[sum.length - 1] = carry;
+        } else if (this.negative != addend.negative && addend.negative) {
+            addend.minus(this);
+        } else if (this.negative != addend.negative && this.negative) {
+            this.minus(addend);
+        }
+        
+        BFInt newSum = new BFInt();
+        newSum.digits = sum;
+        newSum.negative = this.negative;
+
+        return new BFInt(newSum);
+
+
     }
 
     /**
     * Returns the difference of this BFInt minus the given subtrahend.
     */
+    // private static byte[] pad(byte[] digits, int numZeros) {
+    //     //initialize result;
+    //     for (int i = 0;, i < digits.length; i++) {
+    //         //copy digits to result
+    //     }
+    //     for (int i = digits.length; i < digits.length + numZeros; i++) {
+    //         //add a zero to result
+    //     }
+    // }
     public BFInt minus(BFInt subtrahend) {
         // TODO: Finish me, pretty please.
-        return null;
+
+        byte[] sub = new byte[this.digits.length + 1];
+        byte[] longer = null;
+        byte[] shorter = null;
+
+        if (this.negative == subtrahend.negative && this.negative) {
+            this.plus(subtrahend);
+        } else if (this.negative == subtrahend.negative && !this.negative && this.isLessThan(subtrahend)) {
+            longer = subtrahend.digits;
+            shorter = this.digits;
+            for (int i = 0; i < longer.length; i++) {
+                sub[i] = (byte) (longer[i] - shorter[i]);
+            }
+        } else if (this.digits.length == subtrahend.digits.length && this.isGreaterThan(subtrahend) && 
+            this.negative == subtrahend.negative && !this.negative) {
+            // if (this.digits.length > subtrahend.digits.length) {
+            //     longer = this.digits;
+            //     shorter = subtrahend.digits;
+            //     for (int i = 0; i < longer.length; i ++) {
+            //         sub[i] = (byte) (longer[i] - shorter[i]);
+            //     }
+            // }
+            for (int i = 0; i < this.digits.length; i++) {
+                if (!(this.digits[i] >= subtrahend.digits[i])) {
+                    int j = i + 1;
+                    while (digits[j] == 0) {
+                        this.digits[j] = 9;
+                        j++;
+                    } while (j > i) {
+                        this.digits[j] = (byte) (this.digits[j] - 1);
+                    } 
+                    this.digits[i] = (byte) (this.digits[i] + 10);
+                }          
+                sub[i] = (byte) (this.digits[i] - subtrahend.digits[i]);
+            }
+        }
+
+        BFInt newSub = new BFInt();
+        newSub.digits = sub;
+        newSub.negative = this.negative;      
+
+        return new BFInt(newSub);
     }
 
     /**
@@ -216,7 +316,7 @@ public class BFInt {
     public String toString() {
         // TODO: Finish me, pretty please.
         String result = negative ? "-" : /*((digits.length == 1) && (digits[0] == 0) ? "" : "+")*/ "";
-        for (int i = 0; i < digits.length; i++) {
+        for (int i = digits.length - 1; i >= 0; i--) {
             result += digits[i];
         }
         return result;
