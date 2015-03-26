@@ -248,21 +248,23 @@ public class BFInt {
         byte[] shorter = null;
         byte carry = 0;
 
-        if (this.negative == subtrahend.negative && !this.negative && this.digits.length == subtrahend.digits.length
-            && this.isGreaterThan(subtrahend)) {
-            for (int i = 0; i < this.digits.length; i++) {
-                if (this.digits[i] > subtrahend.digits[i]) {
-                    sub[i] = (byte) (this.digits[i] - subtrahend.digits[i]);
-                } 
-                if (carry > 0) {
-                    this.digits[i] -= 1;
-                    carry = 0;
-                } else if (this.digits[i] < subtrahend.digits[i]) {
-                    sub[i] = (byte) (10 + this.digits[i] - subtrahend.digits[i]);
-                    carry = 1;
-                }
-            }
-        } else if (this.negative == subtrahend.negative && !this.negative && subtrahend.isGreaterThan(this)) {
+        // if (this.negative == subtrahend.negative && !this.negative && this.digits.length == subtrahend.digits.length
+        //     && this.isGreaterThan(subtrahend)) {
+        //     for (int i = 0; i < this.digits.length; i++) {
+        //         if (this.digits[i] > subtrahend.digits[i]) {
+        //             sub[i] = (byte) (this.digits[i] - subtrahend.digits[i]);
+        //         } 
+        //         if (carry > 0) {
+        //             this.digits[i] -= 1;
+        //             carry = 0;
+        //         } else if (this.digits[i] < subtrahend.digits[i]) {
+        //             sub[i] = (byte) (10 + this.digits[i] - subtrahend.digits[i]);
+        //             carry = 1;
+        //         }
+        //     }
+        
+
+        if (this.negative == subtrahend.negative && !this.negative && subtrahend.isGreaterThan(this)) {
             if (subtrahend.digits.length > this.digits.length) {
                 this.digits = pad(this.digits, subtrahend.digits.length - this.digits.length);
             }
@@ -273,11 +275,12 @@ public class BFInt {
                 }
                 if (subtrahend.digits[i] >= this.digits[i]) {
                     sub[i] = (byte) (subtrahend.digits[i] - this.digits[i]);
-                } else if (!(subtrahend.digits[i] >= subtrahend.digits[i])) {
+                } else if (subtrahend.digits[i] < subtrahend.digits[i]) {
                     sub[i] = (byte) (10 + subtrahend.digits[i] - this.digits[i]);
                     carry = 1;
                 }
                 sub[i] = (byte) (subtrahend.digits[i] - this.digits[i]);
+                this.negative = true;
             }
         } else if (this.negative == subtrahend.negative && !this.negative && this.isGreaterThan(subtrahend)) {
             if (this.digits.length > subtrahend.digits.length) {
