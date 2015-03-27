@@ -104,27 +104,27 @@ if the second number is zero, since you can't divide by zero).
 When you've completed BFInt, to demonstrate it, you'll want to write at
 least two of the following applications (**extra credit if you write all four**):
 
-* An Exponent class that raises some integer (including
+* An Exponent class that raises some BFInt (including
     negative numbers) to some non-negative
-    integer power (including zero).
+    BFInt power (including zero).
 
-    *java Exponent –3428347589 1001*
+    *java math.Exponent -3428347589 1001*
 
 * A Factorial class that calculates the factorial of
-    any non-negative integer.
+    any non-negative BFInt.
 
-    *java Factorial 234918230*
+    *java math.Factorial 234918230*
 
 * A Fibonacci class that takes a natural number n
     and calculates the nth number in the Fibonacci
     sequence (0, 1, 1, 2, 3, 5, 8…).
 
-    *java Fibonacci 10000*
+    *java math.Fibonacci 10000*
 
 * A GCD class that finds the greatest common divisor
     of two arbitrarily large positive integers.
 
-    *java GCD 123594857495687676666745857293509351 1234456797957795749373967798797979743*
+    *java math.GCD 123594857495687676666745857293509351 1234456797957795749373967798797979743*
 
 ### General Notes for the Project
 
