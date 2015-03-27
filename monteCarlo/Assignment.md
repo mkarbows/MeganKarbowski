@@ -135,7 +135,7 @@ Sample output for your *java math.Pistimator 4* would be:
     end
     Hits = 3
     Darts thrown = 4
-    π ~ 3.0
+    PI ~= 3.0
 
 
 You then run the Dartboard by piping the output of MonteCarloIntegrator to Dartboard.
@@ -143,7 +143,16 @@ For example, you'd run it like this:
 
     java math.Pistimator 100000 | java math.Dartboard
 
-Instructions for running it with MonteCarloIntegrator coming soon!
+To run it with the MonteCarloIntegrator, you might have to change the dimensions of the board.
+By default, the Dartboard is from x = [-1, 1] and y = [-1, 1] with the center being (0, 0).
+To change the dimensions, Dartboard requires 6 arguments. You'd run it like this:
+
+    java math.MonteCarloIntegrator 1000000 -2 2 poly 1 0 0 | java math.Dartboard 400 500 -2 5 2 0
+
+Where 200 is the width in pixels, 500 the height in pixels, -2 the left bound, 5 ceiling, 2 the right bound,
+and 0 the floor. Note that your height and width might distort the aspect ratio if the don't match the
+the ratio of the bounding rectangle.
+
 
 ### General Notes for the Project
 
