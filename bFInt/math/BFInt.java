@@ -94,8 +94,7 @@ public class BFInt {
                 } catch (NumberFormatException e) {
                     throw new IllegalArgumentException();
                 }
-            }    
-       
+            }        
     }
 
     public boolean isEqualTo(BFInt other) {
@@ -116,7 +115,6 @@ public class BFInt {
         // TODO: Finish me, pretty please.
         if ((this.digits.length > other.digits.length && this.negative == other.negative && !this.negative) ||
             (this.negative == other.negative && this.negative && this.digits.length < other.digits.length) ||
-            (this.digits.length < other.digits.length && this.negative == other.negative && this.negative) ||
             (!this.negative && other.negative)) {
             return true;
         } else if ((this.digits.length < other.digits.length && !this.negative && this.negative == other.negative) ||
@@ -142,6 +140,8 @@ public class BFInt {
             for (int i = this.digits.length - 1; i >= 0; i--) {
                 if (this.digits[i] < other.digits[i]) {
                     return true;
+                } else if (this.digits[i] > other.digits[i]) {
+                    return false;
                 }
             }
             return false;
@@ -166,8 +166,9 @@ public class BFInt {
      */
     public BFInt abs() {
         // TODO: Finish me, pretty please.
-        this.negative = false;
-        return this;
+        BFInt absolute = new BFInt(this.toString());
+        absolute.negative = false;
+        return absolute;
     }
 
     // TODO: Add missing methods that are in the specs here.
@@ -182,7 +183,8 @@ public class BFInt {
         byte[] sum = new byte[this.digits.length + 1];
         byte[] longer = null;
         byte[] shorter = null;
-
+        boolean negative = false;
+       
         if (this.digits.length == addend.digits.length && this.negative == addend.negative) {
             for (int i = 0; i < this.digits.length; i++) {
                 sum[i] = (byte) (this.digits[i] + addend.digits[i] + carry);
@@ -190,7 +192,12 @@ public class BFInt {
                 sum[i] = (byte) (sum[i] % 10);
             }
             if (carry > 0) {
+
                 sum[sum.length - 1] = carry;
+            }
+            if (this.negative) {
+                
+                negative = true;
             }
         } else if (this.digits.length != addend.digits.length && this.negative == addend.negative) {
             if (this.digits.length > addend.digits.length) {
@@ -212,24 +219,27 @@ public class BFInt {
                 sum[i] = (byte) (sum[i] % 10);
             }
             sum[sum.length - 1] = carry;
-        } else if (this.negative != addend.negative && addend.negative && this.isGreaterThan(addend)) {
-            this.minus(addend);
-            this.negative = false;
-        } else if (this.negative != addend.negative && this.negative && addend.isGreaterThan(this)) {
-            addend.minus(this);
-            this.negative = false;
-        } 
+            if (this.negative) {
+                negative = true;
+            }
+        } else if (this.negative != addend.negative && addend.negative) {
+            
+            return this.minus(new BFInt(addend.toString().substring(1)));
+        } else if (this.negative != addend.negative && this.negative) {
+
+            BFInt result = this.abs().minus(addend);
+            result.negative = true;
+
+            return result;
+        }
 
         BFInt newSum = new BFInt();
         newSum.digits = sum;
-        newSum.negative = this.negative;
+        newSum.negative = negative;
 
         return new BFInt(newSum);
     }
 
-    /**
-    * Returns the difference of this BFInt minus the given subtrahend.
-    */
     private static byte[] pad(byte[] digits, int numZeros) {
         byte[] digitsLength = new byte[digits.length + numZeros];
         for (int i = 0; i < digits.length; i++) {
@@ -241,28 +251,18 @@ public class BFInt {
         return digitsLength;
     }
 
+    /**
+    * Returns the difference of this BFInt minus the given subtrahend.
+    */
     public BFInt minus(BFInt subtrahend) {
         // TODO: Finish me, pretty please.
 
         byte[] sub = new byte[this.digits.length + 1]; 
         byte[] longer = null;
         byte[] shorter = null;
+        boolean negative = false;
         byte carry = 0;
 
-        // if (this.negative == subtrahend.negative && !this.negative && this.digits.length == subtrahend.digits.length
-        //     && this.isGreaterThan(subtrahend)) {
-        //     for (int i = 0; i < this.digits.length; i++) {
-        //         if (this.digits[i] > subtrahend.digits[i]) {
-        //             sub[i] = (byte) (this.digits[i] - subtrahend.digits[i]);
-        //         } 
-        //         if (carry > 0) {
-        //             this.digits[i] -= 1;
-        //             carry = 0;
-        //         } else if (this.digits[i] < subtrahend.digits[i]) {
-        //             sub[i] = (byte) (10 + this.digits[i] - subtrahend.digits[i]);
-        //             carry = 1;
-        //         }
-        //     }
         if (this.negative == subtrahend.negative && !this.negative && subtrahend.isGreaterThan(this)) {
             if (subtrahend.digits.length > this.digits.length) {
                 this.digits = pad(this.digits, subtrahend.digits.length - this.digits.length);
@@ -278,13 +278,10 @@ public class BFInt {
                     
                 } else if (subtrahend.digits[i] < this.digits[i]) {
                     sub[i] = (byte) (10 + subtrahend.digits[i] - this.digits[i]);
-                    carry = 1;
-                    
+                    carry = 1;                    
                 }
-
             }
-            this.negative = true;
-            
+            negative = true;   
         } else if (this.negative == subtrahend.negative && !this.negative && this.isGreaterThan(subtrahend)) {
             if (this.digits.length > subtrahend.digits.length) {
                 subtrahend.digits = pad(subtrahend.digits, this.digits.length - subtrahend.digits.length);
@@ -301,13 +298,10 @@ public class BFInt {
                     carry = 1;
                 } 
             }
-        // } else if (this.negative != subtrahend.negative && subtrahend.negative) {
-        //     this.plus(subtrahend);
-        // }
-        // } else if (this.negative != subtrahend.negative && this.negative) {
-        //     subtrahend.plus(this);
-        // }
-        } else if (this.negative == subtrahend.negative && this.negative && subtrahend.isGreaterThan(this)) {
+        } else if (this.negative != subtrahend.negative && subtrahend.negative) {
+            BFInt result = new BFInt(subtrahend.toString().substring(1));
+            return this.plus(result);
+        } else if (this.negative == subtrahend.negative && this.negative && subtrahend.isLessThan(this)) {
             if (subtrahend.digits.length > this.digits.length) {
                 this.digits = pad(this.digits, subtrahend.digits.length - this.digits.length);
             }
@@ -323,30 +317,36 @@ public class BFInt {
                     carry = 1;
                 }
             }
-        } else if (this.negative != subtrahend.negative && this.negative) {
-            this.plus(subtrahend);
-            this.negative = true;
-        }
-                   
-        // } else if (this.negative == subtrahend.negative && !this.negative && this.isLessThan(subtrahend) &&
-        //     this.digits.length < subtrahend.digits.length) {
-        //     longer = subtrahend.digits;
-        //     shorter = this.digits;
-        //     for (int i = 0; i < longer.length; i++) {
-        //         sub[i] = (byte) (longer[i] - shorter[i]);
-        //     }
-        // } else if (this.digits.length == subtrahend.digits.length && this.isGreaterThan(subtrahend) && 
-        //     this.negative == subtrahend.negative && !this.negative) {
-        //     longer = this.digits;
-        //     shorter = subtrahend.digits;
-        //     for (int i = 0; i < longer.length; i ++) {
-        //         sub[i] = (byte) (longer[i] - shorter[i]);
-        //     }
-        // }
+            this.negative = false;
+        } else if (this.negative == subtrahend.negative && this.negative && this.isLessThan(subtrahend)) {
+           
+           if (this.digits.length > subtrahend.digits.length) {
+                subtrahend.digits = pad(subtrahend.digits, this.digits.length - subtrahend.digits.length);
+            }
 
+            for (int i = 0; i < subtrahend.digits.length; i++) {
+                if (carry > 0) {
+                    this.digits[i] -= 1;
+                    carry = 0;
+                }
+                if (this.digits[i] >= subtrahend.digits[i]) {
+                    sub[i] = (byte) (this.digits[i] - subtrahend.digits[i]);
+                } else if (!(this.digits[i] >= subtrahend.digits[i])) {
+                    sub[i] = (byte) (10 + this.digits[i] - subtrahend.digits[i]);
+                    carry = 1;
+                }
+            }
+            negative = true;
+        }
+        else if (this.negative != subtrahend.negative && this.negative) {
+            BFInt result = this.abs().plus(subtrahend);
+            result.negative = true;
+            return result;
+        }  
+                   
         BFInt newSub = new BFInt();
         newSub.digits = sub;
-        newSub.negative = this.negative;      
+        newSub.negative = negative;      
         return new BFInt(newSub);
     }
 
