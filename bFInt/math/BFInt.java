@@ -350,12 +350,69 @@ public class BFInt {
         return new BFInt(newSub);
     }
 
+    public BFInt divideByTwo() {
+        byte result[] = new byte[this.digits.length];
+        String answer = "";
+        for (int i = 0; i < this.digits.length - 1; i++) {
+            if (this.digits[i + 1] % 2 == 0) {
+                result[i] = (byte) (this.digits[i] / 2);
+            } else {
+                result[i] = (byte) ((this.digits[i] / 2) + 5);
+            }
+        }
+        result[0] = (byte) (this.digits[0] / 2);
+        for (int i = result.length - 1; i >= 0; i--) {
+            answer += result[i];
+        }
+
+        return new BFInt(answer);
+    }
+
     /**
     * Returns the product of this BFInt times the given multiplier.
     */
     public BFInt times(BFInt multiplier) {
-        // TODO: Finish me, pretty please.
-        return null;
+        BFInt factor = new BFInt(this.toString());
+        boolean negativeSign = false;
+        if ((factor.negative && !(multiplier.negative)) || (!(factor.negative) && multiplier.negative)) {
+            negativeSign = true;
+        } else {
+            negativeSign = false;
+        }
+
+        if (factor.isGreaterThan(multiplier)) {
+            factor = factor.abs();
+            multiplier = multiplier.abs();
+        } else {
+            factor = multiplier.abs();
+            multiplier = factor.abs();
+        }
+        BFInt product = new BFInt();
+        if (!(multiplier.divideByTwo().plus(multiplier.divideByTwo()).equals(multiplier))) {
+            product = product.plus(factor);
+        }
+        while (multiplier.isGreaterThan(new BFInt("1"))) {
+            factor = factor.plus(factor);
+            multiplier = multiplier.divideByTwo();
+            if (!(multiplier.divideByTwo().plus(multiplier.divideByTwo()).equals(multiplier))) {
+                product = product.plus(factor);
+            }
+            System.out.println(product.toString());
+            System.out.println(factor.toString());
+            System.out.println(multiplier.toString());
+
+
+            /*if (factor.digits[factor.digits.length - 1] % 2 != 0) {
+                product = product.plus(multiplier);
+            }
+            factor = factor.divideByTwo();
+            multiplier = multiplier.plus(multiplier);
+            */
+        }
+        product.negative = negativeSign;
+        System.out.println(product);
+        return product;
+
     }
 
     /**
