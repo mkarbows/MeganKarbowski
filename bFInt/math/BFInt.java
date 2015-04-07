@@ -192,11 +192,9 @@ public class BFInt {
                 sum[i] = (byte) (sum[i] % 10);
             }
             if (carry > 0) {
-
                 sum[sum.length - 1] = carry;
             }
-            if (this.negative) {
-                
+            if (this.negative) {             
                 negative = true;
             }
         } else if (this.digits.length != addend.digits.length && this.negative == addend.negative) {
@@ -222,14 +220,12 @@ public class BFInt {
             if (this.negative) {
                 negative = true;
             }
-        } else if (this.negative != addend.negative && addend.negative) {
-            
-            return this.minus(new BFInt(addend.toString().substring(1)));
+        } else if (this.negative != addend.negative && addend.negative) {      
+            BFInt result = this.minus(addend.abs());
+            return result;
         } else if (this.negative != addend.negative && this.negative) {
-
             BFInt result = this.abs().minus(addend);
             result.negative = true;
-
             return result;
         }
 
@@ -299,8 +295,8 @@ public class BFInt {
                 } 
             }
         } else if (this.negative != subtrahend.negative && subtrahend.negative) {
-            BFInt result = new BFInt(subtrahend.toString().substring(1));
-            return this.plus(result);
+            BFInt result = this.plus(subtrahend.abs());
+            return result;
         } else if (this.negative == subtrahend.negative && this.negative && subtrahend.isLessThan(this)) {
             if (subtrahend.digits.length > this.digits.length) {
                 this.digits = pad(this.digits, subtrahend.digits.length - this.digits.length);
@@ -317,13 +313,11 @@ public class BFInt {
                     carry = 1;
                 }
             }
-            this.negative = false;
+            negative = false;
         } else if (this.negative == subtrahend.negative && this.negative && this.isLessThan(subtrahend)) {
-           
-           if (this.digits.length > subtrahend.digits.length) {
+            if (this.digits.length > subtrahend.digits.length) {
                 subtrahend.digits = pad(subtrahend.digits, this.digits.length - subtrahend.digits.length);
             }
-
             for (int i = 0; i < subtrahend.digits.length; i++) {
                 if (carry > 0) {
                     this.digits[i] -= 1;
@@ -358,13 +352,13 @@ public class BFInt {
                 result[i] = (byte) (this.digits[i] / 2);
             } else {
                 result[i] = (byte) ((this.digits[i] / 2) + 5);
+                this.digits[i + 1]--;
             }
         }
-        result[0] = (byte) (this.digits[0] / 2);
+        result[this.digits.length - 1] = (byte) (this.digits[this.digits.length - 1] / 2);
         for (int i = result.length - 1; i >= 0; i--) {
             answer += result[i];
         }
-
         return new BFInt(answer);
     }
 
@@ -372,46 +366,39 @@ public class BFInt {
     * Returns the product of this BFInt times the given multiplier.
     */
     public BFInt times(BFInt multiplier) {
-        BFInt factor = new BFInt(this.toString());
-        boolean negativeSign = false;
-        if ((factor.negative && !(multiplier.negative)) || (!(factor.negative) && multiplier.negative)) {
-            negativeSign = true;
-        } else {
-            negativeSign = false;
+        BFInt left = new BFInt(this.toString());
+        boolean neg = false;
+
+        if ((left.negative && !(multiplier.negative))) {
+            left.negative = false;
+            neg = true;
+        } 
+        if (!(left.negative) && multiplier.negative) {
+            multiplier.negative = false;
+            neg = true;
+        }
+        
+        if (multiplier.negative && left.negative) {
+            multiplier.negative = false;
+            left.negative = false;
+            neg = false;
+        } 
+        if (left.isEqualTo(ZERO) || multiplier.isEqualTo(ZERO)) {
+            neg = false;
         }
 
-        if (factor.isGreaterThan(multiplier)) {
-            factor = factor.abs();
-            multiplier = multiplier.abs();
-        } else {
-            factor = multiplier.abs();
-            multiplier = factor.abs();
-        }
+        
         BFInt product = new BFInt();
-        if (!(multiplier.divideByTwo().plus(multiplier.divideByTwo()).equals(multiplier))) {
-            product = product.plus(factor);
-        }
-        while (multiplier.isGreaterThan(new BFInt("1"))) {
-            factor = factor.plus(factor);
-            multiplier = multiplier.divideByTwo();
-            if (!(multiplier.divideByTwo().plus(multiplier.divideByTwo()).equals(multiplier))) {
-                product = product.plus(factor);
-            }
-            System.out.println(product.toString());
-            System.out.println(factor.toString());
-            System.out.println(multiplier.toString());
-
-
-            /*if (factor.digits[factor.digits.length - 1] % 2 != 0) {
+        while (left.isGreaterThan(ONE) || left.isEqualTo(ONE)) {
+            if (left.digits[0] % 2 != 0) {
                 product = product.plus(multiplier);
             }
-            factor = factor.divideByTwo();
+            left = left.divideByTwo();
             multiplier = multiplier.plus(multiplier);
-            */
         }
-        product.negative = negativeSign;
-        System.out.println(product);
+        product.negative = neg;
         return product;
+        
 
     }
 
@@ -421,7 +408,42 @@ public class BFInt {
     */
     public BFInt dividedBy(BFInt divisor) {
         // TODO: Finish me, pretty please.
-        return null;
+        boolean neg = false;
+        
+        if ((this.negative && !divisor.negative) || (!this.negative && divisor.negative)) {
+            neg = true;
+        } else if ((this.negative && divisor.negative) || (!this.negative && !divisor.negative)) {
+            neg = false;
+        }
+
+        if (divisor.isEqualTo(ZERO)) {
+            throw new IllegalArgumentException();
+        } else if (this.abs().isLessThan(divisor) || (this.isLessThan(divisor.abs()) && divisor.negative 
+                && !this.negative)) {
+            return ZERO;
+        } else if (this.isEqualTo(divisor) && this.negative || (this.isEqualTo(divisor) && !this.negative)) {
+            return ONE;
+        } else if (this.abs().isEqualTo(divisor) && this.negative || this.isEqualTo(divisor.abs()) && divisor.negative) {
+            return NEGATIVE_ONE;
+        } else if (divisor.isEqualTo(ONE)) {
+            return this;
+        } else if (divisor.isEqualTo(NEGATIVE_ONE)) {
+            this.negative = true;
+            return this;
+        }
+
+        BFInt partialQuotient = new BFInt(ONE);
+        BFInt finalQuotient = new BFInt(ZERO);
+        BFInt subtract = new BFInt(divisor.toString());
+
+        while ((divisor.abs().times(new BFInt(TEN))).isLessThan(this.abs())) {
+            divisor = divisor.abs().times(new BFInt(TEN));
+            partialQuotient = partialQuotient.times(new BFInt(TEN));
+        }
+        finalQuotient = partialQuotient.plus((this.abs().minus(divisor.abs()).dividedBy(divisor.abs())));
+        finalQuotient.negative = neg;
+
+        return finalQuotient;
     }
 
     /**
@@ -430,13 +452,20 @@ public class BFInt {
      */
     public BFInt mod(BFInt divisor) {
         // TODO: Finish me, pretty please.
-        return null;
+        boolean neg = false;
+
+        if ((this.negative && !(divisor.negative)) || (this.negative && divisor.negative)) {
+            neg = true;
+        } else {
+            neg = false;
+        }
+        return (this.minus((this.dividedBy(divisor)).times(divisor)));
     }
 
     @Override
     public String toString() {
         // TODO: Finish me, pretty please.
-        String result = negative ? "-" : /*((digits.length == 1) && (digits[0] == 0) ? "" : "+")*/ "";
+        String result = negative ? "-" : "";
         for (int i = digits.length - 1; i >= 0; i--) {
             result += digits[i];
         }
