@@ -11,8 +11,6 @@ import java.util.Arrays;
  */
 public class BFInt {
 
-
-    // TODO: Set these.
     /**
      * A constant for a BFInt with a value of 0.
      */
@@ -36,69 +34,59 @@ public class BFInt {
     private byte[] digits;
 
     public BFInt() {
-        // TODO: Finish me, pretty please.
         this("0");
     }
 
     public BFInt(int number) {
-        // TODO: Finish me, pretty please.
         this("" + number);
     }
 
     public BFInt(long number) {
-        // TODO: Finish me, pretty please.
         this("" + number);
     }
 
     public BFInt(short number) {
-        // TODO: Finish me, pretty please.
         this("" + number);
     }
 
     public BFInt(byte number) {
-        // TODO: Finish me, pretty please.
         this("" + number);
     }
 
     public BFInt(BFInt bFInt) {
-        // TODO: Finish me, pretty please.
         this("" + bFInt);
-
     }
 
-    public BFInt(String numberString) {
-        // TODO: Finish me, pretty please.
-        
-            String copyString = numberString;
-            copyString = copyString.trim();
-            if (copyString.substring(0, 1).equals("-")) {
-                negative = true;
-                copyString = copyString.substring(1);
-            } else if (copyString.substring(0, 1).equals("+")) {
-                negative = false;
-                copyString = copyString.substring(1);
-            } else {
-                negative = false;
+    public BFInt(String numberString) {        
+        String copyString = numberString;
+        copyString = copyString.trim();
+        if (copyString.substring(0, 1).equals("-")) {
+            negative = true;
+            copyString = copyString.substring(1);
+        } else if (copyString.substring(0, 1).equals("+")) {
+            negative = false;
+            copyString = copyString.substring(1);
+        } else {
+            negative = false;
+        }
+        String firstChar = copyString.substring(0, 1);
+        while (firstChar.equals("0") && copyString.length() != 1) {
+            copyString = copyString.substring(1);
+            firstChar = copyString.substring(0, 1);
+        }
+        digits = new byte[copyString.length()];
+        for (int i = 0; i < copyString.length(); i++) {
+            String currentChar = copyString.substring(copyString.length() - 1 - i, copyString.length() - i);
+            try {
+                byte currentDigit = Byte.parseByte(currentChar);
+                digits[i] = currentDigit;
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException();
             }
-            String firstChar = copyString.substring(0, 1);
-            while (firstChar.equals("0") && copyString.length() != 1) {
-                copyString = copyString.substring(1);
-                firstChar = copyString.substring(0, 1);
-            }
-            digits = new byte[copyString.length()];
-            for (int i = 0; i < copyString.length(); i++) {
-                String currentChar = copyString.substring(copyString.length() - 1 - i, copyString.length() - i);
-                try {
-                    byte currentDigit = Byte.parseByte(currentChar);
-                    digits[i] = currentDigit;
-                } catch (NumberFormatException e) {
-                    throw new IllegalArgumentException();
-                }
-            }        
+        }        
     }
 
     public boolean isEqualTo(BFInt other) {
-        // TODO: Finish me, pretty please.
         if ((this.digits.length != other.digits.length) ||
             (this.negative != other.negative)) {
             return false;
@@ -112,7 +100,6 @@ public class BFInt {
     } 
 
     public boolean isGreaterThan(BFInt other) {
-        // TODO: Finish me, pretty please.
         if ((this.digits.length > other.digits.length && this.negative == other.negative && !this.negative) ||
             (this.negative == other.negative && this.negative && this.digits.length < other.digits.length) ||
             (!this.negative && other.negative)) {
@@ -150,7 +137,6 @@ public class BFInt {
     }
 
     public boolean isLessThan(BFInt other) {
-        // TODO: Finish me, pretty please.
         return !isEqualTo(other) && !isGreaterThan(other);
     }
 
@@ -165,20 +151,15 @@ public class BFInt {
      * Returns a new BFInt that is the absoulte value of this BFInt.
      */
     public BFInt abs() {
-        // TODO: Finish me, pretty please.
         BFInt absolute = new BFInt(this.toString());
         absolute.negative = false;
         return absolute;
     }
 
-    // TODO: Add missing methods that are in the specs here.
-
     /**
     * Returns the sum of this BFInt plus the addend.
     */
-    public BFInt plus(BFInt addend) {
-        // TODO: Finish me, pretty please.
-        
+    public BFInt plus(BFInt addend) {        
         byte carry = 0;
         byte[] sum = new byte[this.digits.length + 1];
         byte[] longer = null;
@@ -232,7 +213,6 @@ public class BFInt {
         BFInt newSum = new BFInt();
         newSum.digits = sum;
         newSum.negative = negative;
-
         return new BFInt(newSum);
     }
 
@@ -251,8 +231,6 @@ public class BFInt {
     * Returns the difference of this BFInt minus the given subtrahend.
     */
     public BFInt minus(BFInt subtrahend) {
-        // TODO: Finish me, pretty please.
-
         byte[] sub = new byte[this.digits.length + 1]; 
         byte[] longer = null;
         byte[] shorter = null;
@@ -386,7 +364,6 @@ public class BFInt {
         if (left.isEqualTo(ZERO) || multiplier.isEqualTo(ZERO)) {
             neg = false;
         }
-
         
         BFInt product = new BFInt();
         while (left.isGreaterThan(ONE) || left.isEqualTo(ONE)) {
@@ -405,7 +382,6 @@ public class BFInt {
     * Throws an IllegalArgumentException if the divisor is 0.
     */
     public BFInt dividedBy(BFInt divisor) {
-        // TODO: Finish me, pretty please.
         boolean neg = false;
         
         if ((this.negative && !divisor.negative) || (!this.negative && divisor.negative)) {
@@ -440,7 +416,6 @@ public class BFInt {
         }
         finalQuotient = partialQuotient.plus((this.abs().minus(subtract.abs()).dividedBy(divisor.abs())));
         finalQuotient.negative = neg;
-
         return finalQuotient;
     }
 
@@ -449,7 +424,6 @@ public class BFInt {
      * Throws an IllegalArgumentException if the divisor is 0.
      */
     public BFInt mod(BFInt divisor) {
-        // TODO: Finish me, pretty please.
         boolean neg = false;
 
         if ((this.negative && !(divisor.negative)) || (this.negative && divisor.negative)) {
@@ -462,7 +436,6 @@ public class BFInt {
 
     @Override
     public String toString() {
-        // TODO: Finish me, pretty please.
         String result = negative ? "-" : "";
         for (int i = digits.length - 1; i >= 0; i--) {
             result += digits[i];
@@ -471,27 +444,27 @@ public class BFInt {
     }
 
     public static void main(String[] args) {
+        try {
+            if (args.length < 2) {
+                System.out.println("Please enter two numbers");
+                return;
+            } else {
+                BFInt first = new BFInt(args[0]);
+                BFInt second = new BFInt(args[1]);
 
-        if (args.length < 2) {
+                System.out.println("Sum: " + first.plus(second));
+                System.out.println("Difference: " + first.minus(second));
+                System.out.println("Product: " + first.times(second));
+                System.out.println("Quotient: " + first.dividedBy(second));
+                System.out.println("Remainder: " + first.mod(second));
+            }
+        } catch (IllegalArgumentException e) {
             System.out.println("Please enter two numbers");
             return;
-        } else {
-            BFInt first = new BFInt(args[0]);
-            BFInt second = new BFInt(args[1]);
-
-            System.out.println("Sum: " + first.plus(second));
-            System.out.println("Difference: " + first.minus(second));
-            System.out.println("Product: " + first.times(second));
-            System.out.println("Quotient: " + first.dividedBy(second));
-            System.out.println("Remainder: " + first.mod(second));
         }
-
-        
     }
 
-
     // This is advanced java down here...you don't need to worry about these.
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -516,5 +489,4 @@ public class BFInt {
         result = prime * result + (negative ? 0 : 1);
         return result;
     }
-
 }
