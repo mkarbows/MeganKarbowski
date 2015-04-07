@@ -398,8 +398,6 @@ public class BFInt {
         }
         product.negative = neg;
         return product;
-        
-
     }
 
     /**
@@ -436,11 +434,11 @@ public class BFInt {
         BFInt finalQuotient = new BFInt(ZERO);
         BFInt subtract = new BFInt(divisor.toString());
 
-        while ((divisor.abs().times(new BFInt(TEN))).isLessThan(this.abs())) {
-            divisor = divisor.abs().times(new BFInt(TEN));
+        while ((subtract.abs().times(new BFInt(TEN))).isLessThan(this.abs())) {
+            subtract = subtract.abs().times(new BFInt(TEN));
             partialQuotient = partialQuotient.times(new BFInt(TEN));
         }
-        finalQuotient = partialQuotient.plus((this.abs().minus(divisor.abs()).dividedBy(divisor.abs())));
+        finalQuotient = partialQuotient.plus((this.abs().minus(subtract.abs()).dividedBy(divisor.abs())));
         finalQuotient.negative = neg;
 
         return finalQuotient;
@@ -472,6 +470,24 @@ public class BFInt {
         return result;
     }
 
+    public static void main(String[] args) {
+
+        if (args.length < 2) {
+            System.out.println("Please enter two numbers");
+            return;
+        } else {
+            BFInt first = new BFInt(args[0]);
+            BFInt second = new BFInt(args[1]);
+
+            System.out.println("Sum: " + first.plus(second));
+            System.out.println("Difference: " + first.minus(second));
+            System.out.println("Product: " + first.times(second));
+            System.out.println("Quotient: " + first.dividedBy(second));
+            System.out.println("Remainder: " + first.mod(second));
+        }
+
+        
+    }
 
 
     // This is advanced java down here...you don't need to worry about these.
