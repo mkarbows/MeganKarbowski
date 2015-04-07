@@ -243,15 +243,15 @@ public class BFInt {
                 sub = new byte[this.digits.length + 1];
             }
             for (int i = 0; i < subtrahend.digits.length; i++) {
-                if (carry > 0) {
-                    subtrahend.digits[i] -= 1;
-                    carry = 0;
-                }
-                if (subtrahend.digits[i] >= this.digits[i]) {
+                // if (carry > 0) {
+                //     subtrahend.digits[i] -= 1;
+                //     carry = 0;
+                // }
+                if (subtrahend.digits[i] - carry >= this.digits[i]) {
                     sub[i] = (byte) (subtrahend.digits[i] - carry - this.digits[i]);
-                    
-                } else if (subtrahend.digits[i] < this.digits[i]) {
-                    sub[i] = (byte) (10 + subtrahend.digits[i] - this.digits[i]);
+                    carry = 0;
+                } else if (subtrahend.digits[i] - carry < this.digits[i]) {
+                    sub[i] = (byte) (10 + subtrahend.digits[i] - carry - this.digits[i]);
                     carry = 1;                    
                 }
             }
@@ -261,14 +261,15 @@ public class BFInt {
                 subtrahend.digits = pad(subtrahend.digits, this.digits.length - subtrahend.digits.length);
             }
             for (int i = 0; i < this.digits.length; i++) {
-                if (carry > 0) {
-                    this.digits[i] -= 1;
+                // if (carry > 0) {
+                //     this.digits[i] -= 1;
+                //     carry = 0;
+                // }
+                if (this.digits[i] - carry >= subtrahend.digits[i]) {
+                    sub[i] = (byte) (this.digits[i] - carry - subtrahend.digits[i]);
                     carry = 0;
-                }
-                if (this.digits[i] >= subtrahend.digits[i]) {
-                    sub[i] = (byte) (this.digits[i] - subtrahend.digits[i]);
-                } else if (!(this.digits[i] >= subtrahend.digits[i])) {
-                    sub[i] = (byte) (10 + this.digits[i] - subtrahend.digits[i]);
+                } else if (!(this.digits[i] - carry >= subtrahend.digits[i])) {
+                    sub[i] = (byte) (10 + this.digits[i] - carry - subtrahend.digits[i]);
                     carry = 1;
                 } 
             }
@@ -299,14 +300,15 @@ public class BFInt {
                 subtrahend.digits = pad(subtrahend.digits, this.digits.length - subtrahend.digits.length);
             }
             for (int i = 0; i < subtrahend.digits.length; i++) {
-                if (carry > 0) {
-                    this.digits[i] -= 1;
+                // if (carry > 0) {
+                //     this.digits[i] -= 1;
+                //     carry = 0;
+                // }
+                if (this.digits[i] - carry >= subtrahend.digits[i]) {
+                    sub[i] = (byte) (this.digits[i] - carry - subtrahend.digits[i]);
                     carry = 0;
-                }
-                if (this.digits[i] >= subtrahend.digits[i]) {
-                    sub[i] = (byte) (this.digits[i] - subtrahend.digits[i]);
-                } else if (!(this.digits[i] >= subtrahend.digits[i])) {
-                    sub[i] = (byte) (10 + this.digits[i] - subtrahend.digits[i]);
+                } else if (!(this.digits[i] - carry >= subtrahend.digits[i])) {
+                    sub[i] = (byte) (10 + this.digits[i] - carry - subtrahend.digits[i]);
                     carry = 1;
                 }
             }
