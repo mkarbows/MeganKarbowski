@@ -349,33 +349,34 @@ public class BFInt {
     */
     public BFInt times(BFInt multiplier) {
         BFInt left = new BFInt(this.toString());
+        BFInt right = new BFInt(multiplier.toString());
         boolean neg = false;
 
-        if ((left.negative && !(multiplier.negative))) {
+        if ((left.negative && !(right.negative))) {
             left.negative = false;
             neg = true;
         } 
-        if (!(left.negative) && multiplier.negative) {
-            multiplier.negative = false;
+        if (!(left.negative) && right.negative) {
+            right.negative = false;
             neg = true;
         }
         
-        if (multiplier.negative && left.negative) {
-            multiplier.negative = false;
+        if (right.negative && left.negative) {
+            right.negative = false;
             left.negative = false;
             neg = false;
         } 
-        if (left.isEqualTo(ZERO) || multiplier.isEqualTo(ZERO)) {
+        if (left.isEqualTo(ZERO) || right.isEqualTo(ZERO)) {
             neg = false;
         }
         
         BFInt product = new BFInt();
         while (left.isGreaterThan(ONE) || left.isEqualTo(ONE)) {
             if (left.digits[0] % 2 != 0) {
-                product = product.plus(multiplier);
+                product = product.plus(right);
             }
             left = left.divideByTwo();
-            multiplier = multiplier.plus(multiplier);
+            right = right.plus(right);
         }
         product.negative = neg;
         return product;
@@ -406,7 +407,8 @@ public class BFInt {
         } else if (divisor.isEqualTo(ONE)) {
             return this;
         } else if (divisor.isEqualTo(NEGATIVE_ONE)) {
-            this.negative = true;
+            BFInt newThis = new BFInt(this.toString());
+            newThis.negative = true;
             return this;
         }
 
@@ -418,6 +420,7 @@ public class BFInt {
             subtract = subtract.abs().times(new BFInt(TEN));
             partialQuotient = partialQuotient.times(new BFInt(TEN));
         }
+
         finalQuotient = partialQuotient.plus((this.abs().minus(subtract.abs()).dividedBy(divisor.abs())));
         finalQuotient.negative = neg;
         return finalQuotient;
