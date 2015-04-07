@@ -248,7 +248,7 @@ public class BFInt {
                     carry = 0;
                 }
                 if (subtrahend.digits[i] >= this.digits[i]) {
-                    sub[i] = (byte) (subtrahend.digits[i] - this.digits[i]);
+                    sub[i] = (byte) (subtrahend.digits[i] - carry - this.digits[i]);
                     
                 } else if (subtrahend.digits[i] < this.digits[i]) {
                     sub[i] = (byte) (10 + subtrahend.digits[i] - this.digits[i]);
@@ -277,17 +277,19 @@ public class BFInt {
             return result;
         } else if (this.negative == subtrahend.negative && this.negative && subtrahend.isLessThan(this)) {
             if (subtrahend.digits.length > this.digits.length) {
+                sub = new byte[subtrahend.digits.length];
                 this.digits = pad(this.digits, subtrahend.digits.length - this.digits.length);
             }
             for (int i = 0; i < subtrahend.digits.length; i++) {
-                if (carry > 0) {
-                    subtrahend.digits[i] -= 1;
+                // if (carry > 0) {
+                //     subtrahend.digits[i] -= 1;
+                //     carry = 0;
+                // }
+                if (subtrahend.digits[i] - carry >= this.digits[i]) {
+                    sub[i] = (byte) (subtrahend.digits[i] - carry - this.digits[i]);
                     carry = 0;
-                }
-                if (subtrahend.digits[i] >= this.digits[i]) {
-                    sub[i] = (byte) (subtrahend.digits[i] - this.digits[i]);
-                } else if (subtrahend.digits[i] < this.digits[i]) {
-                    sub[i] = (byte) (10 + subtrahend.digits[i] - this.digits[i]);
+                } else if (subtrahend.digits[i] - carry < this.digits[i]) {
+                    sub[i] = (byte) (10 + subtrahend.digits[i] - carry - this.digits[i]);
                     carry = 1;
                 }
             }
@@ -459,6 +461,7 @@ public class BFInt {
                 System.out.println("Remainder: " + first.mod(second));
             }
         } catch (IllegalArgumentException e) {
+            e.printStackTrace();
             System.out.println("Please enter two numbers");
             return;
         }
