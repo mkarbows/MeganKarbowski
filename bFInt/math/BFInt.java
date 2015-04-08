@@ -237,16 +237,16 @@ public class BFInt {
         boolean negative = false;
         byte carry = 0;
 
+        if (subtrahend.isEqualTo(ZERO)) {
+            return this;
+        }
+
         if (this.negative == subtrahend.negative && !this.negative && subtrahend.isGreaterThan(this)) {
             if (subtrahend.digits.length > this.digits.length) {
                 this.digits = pad(this.digits, subtrahend.digits.length - this.digits.length);
                 sub = new byte[this.digits.length + 1];
             }
             for (int i = 0; i < subtrahend.digits.length; i++) {
-                // if (carry > 0) {
-                //     subtrahend.digits[i] -= 1;
-                //     carry = 0;
-                // }
                 if (subtrahend.digits[i] - carry >= this.digits[i]) {
                     sub[i] = (byte) (subtrahend.digits[i] - carry - this.digits[i]);
                     carry = 0;
@@ -261,10 +261,6 @@ public class BFInt {
                 subtrahend.digits = pad(subtrahend.digits, this.digits.length - subtrahend.digits.length);
             }
             for (int i = 0; i < this.digits.length; i++) {
-                // if (carry > 0) {
-                //     this.digits[i] -= 1;
-                //     carry = 0;
-                // }
                 if (this.digits[i] - carry >= subtrahend.digits[i]) {
                     sub[i] = (byte) (this.digits[i] - carry - subtrahend.digits[i]);
                     carry = 0;
@@ -282,10 +278,6 @@ public class BFInt {
                 this.digits = pad(this.digits, subtrahend.digits.length - this.digits.length);
             }
             for (int i = 0; i < subtrahend.digits.length; i++) {
-                // if (carry > 0) {
-                //     subtrahend.digits[i] -= 1;
-                //     carry = 0;
-                // }
                 if (subtrahend.digits[i] - carry >= this.digits[i]) {
                     sub[i] = (byte) (subtrahend.digits[i] - carry - this.digits[i]);
                     carry = 0;
@@ -300,10 +292,6 @@ public class BFInt {
                 subtrahend.digits = pad(subtrahend.digits, this.digits.length - subtrahend.digits.length);
             }
             for (int i = 0; i < subtrahend.digits.length; i++) {
-                // if (carry > 0) {
-                //     this.digits[i] -= 1;
-                //     carry = 0;
-                // }
                 if (this.digits[i] - carry >= subtrahend.digits[i]) {
                     sub[i] = (byte) (this.digits[i] - carry - subtrahend.digits[i]);
                     carry = 0;
@@ -395,7 +383,8 @@ public class BFInt {
             neg = false;
         }
 
-        if (divisor.isEqualTo(ZERO)) {
+        if (divisor.isEqualTo(ZERO) || divisor.toString() == "00") {
+            System.out.println("Can't divide by 0");            
             throw new IllegalArgumentException();
         } else if (this.abs().isLessThan(divisor) || (this.isLessThan(divisor.abs()) && divisor.negative 
                 && !this.negative)) {
@@ -461,12 +450,11 @@ public class BFInt {
 
                 System.out.println("Sum: " + first.plus(second));
                 System.out.println("Difference: " + first.minus(second));
-                System.out.println("Product: " + first.times(second));
+                System.out.println("Product: " + first.times(second));                
                 System.out.println("Quotient: " + first.dividedBy(second));
                 System.out.println("Remainder: " + first.mod(second));
             }
         } catch (IllegalArgumentException e) {
-            e.printStackTrace();
             System.out.println("Please enter two numbers");
             return;
         }
