@@ -40,10 +40,13 @@ public class Pistimator {
     }
 
     public static void main(String[] args) {
-	    try {
-	    	
+	    try {	    	
 	    	Pistimator newPi;
 	    	double piEstimate;
+	    	if (Long.parseLong(args[0]) < 0) {
+	    		System.out.println("Please enter a positive number");
+	    		return;
+	    	}
 	    	if (args.length == 0) {
 	    		newPi = new Pistimator();
 	    	} else {
@@ -53,7 +56,7 @@ public class Pistimator {
 	    	System.out.println("Number of hits: " + newPi.getHits());
 	    	System.out.println("Number of darts: " + newPi.darts);
 	    	System.out.println("Pi Estimate: " + piEstimate);
-	    } catch (Exception e) {
+	    } catch (IllegalArgumentException e) {
 	    	System.out.println("This isn't a long/int");
 	    }
     }
