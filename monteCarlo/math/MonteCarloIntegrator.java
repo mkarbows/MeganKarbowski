@@ -71,7 +71,7 @@ public class MonteCarloIntegrator {
     		double estimate1 = myIntegrator.integrate(lowerBound, upperBound, darts);
     		System.out.println("end");
     		System.out.println("f(x) = " + p.toString());
-    		System.out.println("Number of estimate: " + estimate1);
+    		System.out.println("Estimate of area: " + estimate1);
     		System.out.println("Number of darts: " + darts);
 	    } catch (IllegalArgumentException e) {
 	    	System.out.println("Please enter at least 4 numbers and only numbers");
