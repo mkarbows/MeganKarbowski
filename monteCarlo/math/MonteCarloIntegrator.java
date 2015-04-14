@@ -54,9 +54,12 @@ public class MonteCarloIntegrator {
     	for (int i = 3; i < args.length; i++) {
     		coeff[i - 3] = Double.parseDouble(args[i]);
     	}
-    	// Polynomial p = new Polynomial(coeff);
-    	// MonteCarloIntegrator myIntegrator = MonteCarloIntegrator(p);
-    	// System.out.println("Number of darts: " + p.darts);
+
+    	Integratable p = new Polynomial(coeff);
+    	MonteCarloIntegrator myIntegrator = new MonteCarloIntegrator(p);
+    	System.out.println("Number of darts: " + darts);
+    	System.out.println("Number of hits: " + myIntegrator.hits); //why won't this print out the hits
+
     }
 
     private static void printCoordinates(double x, double y, boolean in) {
