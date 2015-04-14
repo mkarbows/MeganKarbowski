@@ -2,7 +2,6 @@ package math;
 
 public class MonteCarloIntegrator {
 
-    // TODO: Add instance variables, constructors and methods.
 	private Integratable function;
 	private long darts = 1000000; 
 	private long hits;
@@ -15,26 +14,36 @@ public class MonteCarloIntegrator {
     	double rangeX = upperBound - lowerBound;
     	double ceiling = 0;
     	double floor = 0;
-    	double rangeY = ceiling - floor;
-    	for (int i = 0; i < 100; i++) {
-    		double y = function.f(lowerBound + (i/100) * rangeX);
+		int positiveHits = 0; 
+		int negHits = 0;		   	
+    	for (int i = 0; i < darts; i++) {
+    		double y = function.f(lowerBound + (double)(i)/darts * rangeX);
     		if (y > ceiling) {
     			ceiling = y;
+
     		} else if (y < floor) {
     			floor = y;
     		}
     	}
+    	double rangeY = ceiling - floor;
     	for (int i = 0; i < darts; i++) {
 			double randomX = Math.random() * rangeX + lowerBound;
 			double randomY = Math.random() * rangeY + floor;
 			double actualY = function.f(randomX);
-			printCoordinates(randomX, randomY, randomY <= actualY);
-			if (randomY <= actualY) {
-				hits++;
+			printCoordinates(randomX, randomY, (randomY <= actualY && randomY > 0) || (randomY >= actualY && randomY < 0));
+			if (randomY <= actualY && randomY > 0) {
+				positiveHits++;
+			} else if (randomY >= actualY && randomY < 0) {
+				negHits++;
 			}
 		}
-		return hits;
+		int hits = positiveHits + negHits;
+		double area = (upperBound - lowerBound) * (ceiling - floor);
+		double estimateArea = area * ((double)(positiveHits - negHits) / darts);
+		return estimateArea;
     }
+
+     
 
     public double integrate(double lowerBound, double upperBound, long darts) {
     	this.darts = darts;
@@ -42,24 +51,31 @@ public class MonteCarloIntegrator {
     }
 
     public static void main(String[] args) {
-    	if (args.length < 4) {
-    		System.out.println("Please enter at least 3 numbers");
-    		return;
-    	} 
-    	long darts = Long.parseLong(args[0]);
-    	double lowerBound = Double.parseDouble(args[1]);
-    	double upperBound = Double.parseDouble(args[2]);
-    	int numOfCoeff = args.length - 3;
-    	double[] coeff = new double[numOfCoeff];
-    	for (int i = 3; i < args.length; i++) {
-    		coeff[i - 3] = Double.parseDouble(args[i]);
-    	}
+	    try {
+	    	if (args.length < 4) {
+	    		System.out.println("Please enter at least 4 numbers");
+	    		return;
+	    	} 
+	    	long darts = Long.parseLong(args[0]);
+	    	double lowerBound = Double.parseDouble(args[1]);
+	    	double upperBound = Double.parseDouble(args[2]);
+	    	int numOfCoeff = args.length - 3;
+	    	double[] coeff = new double[numOfCoeff];
+	    	for (int i = 3; i < args.length; i++) {
+	    		coeff[i - 3] = Double.parseDouble(args[i]);
+	    	}
+	    	Integratable p = new Polynomial(coeff);
+    		MonteCarloIntegrator myIntegrator = new MonteCarloIntegrator(p);
 
-    	Integratable p = new Polynomial(coeff);
-    	MonteCarloIntegrator myIntegrator = new MonteCarloIntegrator(p);
-    	System.out.println("Number of darts: " + darts);
-    	System.out.println("Number of hits: " + myIntegrator.hits); //why won't this print out the hits
-
+    		System.out.println("start");
+    		double estimate1 = myIntegrator.integrate(lowerBound, upperBound, darts);
+    		System.out.println("end");
+    		System.out.println("Number of estimate: " + estimate1);
+    		System.out.println("Number of darts: " + darts);
+	    } catch (IllegalArgumentException e) {
+	    	System.out.println("Please enter at least 4 numbers and only numbers");
+	    	return;
+	    }
     }
 
     private static void printCoordinates(double x, double y, boolean in) {
