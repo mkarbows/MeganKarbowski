@@ -70,6 +70,7 @@ public class MonteCarloIntegrator {
     		System.out.println("start");
     		double estimate1 = myIntegrator.integrate(lowerBound, upperBound, darts);
     		System.out.println("end");
+    		System.out.println("f(x) = " + p.toString());
     		System.out.println("Number of estimate: " + estimate1);
     		System.out.println("Number of darts: " + darts);
 	    } catch (IllegalArgumentException e) {
