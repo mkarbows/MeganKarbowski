@@ -54,7 +54,7 @@ public class IntTuple {
      */
     public void set(int index, int element) {
         if (index < 0 || index >= elements.length) {
-            throw new IllegalArgumentException("Index Out of Bounds: " + index);
+            throw new IllegalArgumentException("Index out of Bounds: " + index);
         }
         elements[index]= element;
     }
@@ -63,7 +63,9 @@ public class IntTuple {
      * Returns a new IntTuple that is the sum of this IntTuple and otherTuple.
      */
     public IntTuple plus(IntTuple otherTuple) {
-        if (otherTuple.elements.length != this.elements.length) {
+        if (otherTuple == null) {
+            return null;
+        } else if (otherTuple.elements.length != this.elements.length) {
             throw new IllegalArgumentException(
                     "Cannot add tuples of differing lengths, chief.");
         }
