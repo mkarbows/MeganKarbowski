@@ -28,15 +28,30 @@ public class DynamicChangeMaker {
                 if (u == 0) {
                     denominations = zeroTuple;
                 } else {
+                    // if (u < denominations.intAt(i)) {
+                    //     denominations = null;
+                    // }
                     if (u >= denominations.intAt(i)) {
-                        int difference = u % denominations.intAt(i);
-                        if (difference == 0) {
-                            zeroTuple.set(0, 1);
-                        } if (difference != 0) {
-                            
+
+                        int difference = u - denominations.intAt(i);
+                        zeroTuple.set(i, 1);
+                        if (changeTable[i][difference] != null) {
+                            zeroTuple = zeroTuple.plus(changeTable[i][difference]);
+                        } else {
+                            zeroTuple = null;
                         }
+                    } else {
+                        zeroTuple = null;
                     }
+
+                    if (i > 0 && (changeTable[i - 1][u] != null && zeroTuple.sumOfElements() > changeTable[i - 1][u].sumOfElements())) {
+                        changeTable[i][u] = changeTable[i - 1][u];
+                    } else {
+                        changeTable[i][u] = zeroTuple;
+                    }
+
                 }
+                //return;
             }
         }
 
