@@ -14,9 +14,11 @@ public class DynamicChangeMaker {
      * The returned IntTuple should be the most efficient answer (least possible
      * amount of coins). Returns null if it's impossible to find a solution.
      */
+
     public static IntTuple makeChange(IntTuple denominations, int cents) {
         //TODO: Implement me!
         IntTuple tuple = new IntTuple(cents);
+
 
         int numberOfRows = denominations.length();
         int numberOfColumns = cents + 1;
@@ -26,36 +28,53 @@ public class DynamicChangeMaker {
             for (int u = 0; u < cents + 1; u++) {
                 IntTuple zeroTuple = new IntTuple(denominations.length());
                 if (u == 0) {
-                    denominations = zeroTuple;
+                    changeTable[i][u] = zeroTuple;
                 } else {
-                    // if (u < denominations.intAt(i)) {
-                    //     denominations = null;
-                    // }
-                    if (u >= denominations.intAt(i)) {
-
+                    if (u < denominations.intAt(i)) {
+                        if (i == 0) {
+                            changeTable[i][u] = null;
+                        } else {
+                            changeTable[i][u] = changeTable[i -1][u];
+                        }
+                    } else {
                         int difference = u - denominations.intAt(i);
                         zeroTuple.set(i, 1);
                         if (changeTable[i][difference] != null) {
                             zeroTuple = zeroTuple.plus(changeTable[i][difference]);
+                            if (i > 0 && changeTable[i -1][u] != null && zeroTuple.sumOfElements() > changeTable[i - 1][u].sumOfElements()) {
+                                zeroTuple = changeTable[i - 1][u];
+                            }
                         } else {
-                            zeroTuple = null;
+                            if(i > 0){
+                                zeroTuple = changeTable[i - 1][u];
+                            } else {
+                                zeroTuple = null;
+                            }
                         }
-                    } else {
-                        zeroTuple = null;
-                    }
-
-                    if (i > 0 && (changeTable[i - 1][u] != null && zeroTuple.sumOfElements() > changeTable[i - 1][u].sumOfElements())) {
-                        changeTable[i][u] = changeTable[i - 1][u];
-                    } else {
                         changeTable[i][u] = zeroTuple;
                     }
 
+                    // if (i > 0 && changeTable[i][u] == null || i > 0 && (changeTable[i - 1][u] != null && zeroTuple.sumOfElements() > changeTable[i - 1][u].sumOfElements())) {
+                    //     changeTable[i][u] = changeTable[i - 1][u];
+                    
+                    // } 
+                    // else {
+                    //     changeTable[i][u] = zeroTuple;
+                    // }
                 }
-                //return;
             }
         }
+        //printTable(changeTable);
+        return changeTable[numberOfRows - 1][numberOfColumns -1];
+    }
 
-        return null;
+    private static void printTable(IntTuple[][] table) {
+        for (int i = 0; i < table.length; i++) {
+            for (int u = 0; u < table[i].length; u++) {
+                System.out.print(table[i][u]);
+            }
+            System.out.println("");
+        }
     }
 
     private static void printCoins(IntTuple denominations) {
