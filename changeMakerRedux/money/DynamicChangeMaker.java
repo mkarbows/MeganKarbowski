@@ -16,10 +16,7 @@ public class DynamicChangeMaker {
      */
 
     public static IntTuple makeChange(IntTuple denominations, int cents) {
-        //TODO: Implement me!
         IntTuple tuple = new IntTuple(cents);
-
-
         int numberOfRows = denominations.length();
         int numberOfColumns = cents + 1;
         IntTuple[][] changeTable = new IntTuple[numberOfRows][numberOfColumns];
@@ -53,18 +50,9 @@ public class DynamicChangeMaker {
                         }
                         changeTable[i][u] = zeroTuple;
                     }
-
-                    // if (i > 0 && changeTable[i][u] == null || i > 0 && (changeTable[i - 1][u] != null && zeroTuple.sumOfElements() > changeTable[i - 1][u].sumOfElements())) {
-                    //     changeTable[i][u] = changeTable[i - 1][u];
-                    
-                    // } 
-                    // else {
-                    //     changeTable[i][u] = zeroTuple;
-                    // }
                 }
             }
         }
-        //printTable(changeTable);
         return changeTable[numberOfRows - 1][numberOfColumns -1];
     }
 
