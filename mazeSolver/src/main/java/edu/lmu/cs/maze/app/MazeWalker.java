@@ -60,20 +60,12 @@ public class MazeWalker {
      * walker's destination.
      */
     public MazeWalker(Maze maze, int cheeseX, int cheeseY) {
-        // TODO: Implement me!
         this.maze = maze;
         this.cheeseX = cheeseX;
         this.cheeseY = cheeseY;
         this.pathStack = new PathStack(maze.getMazeWidth() * maze.getMazeHeight());
         this.breadCrumbs = new boolean[maze.getMazeWidth()][maze.getMazeHeight()];
     }
-
-    /**
-     * Takes a step toward reaching the given destination from the given current
-     * location, and returns either the direction of the next step, whether or
-     * not that destination has been reached, or whether that destination is
-     * impossible to reach.
-     */
 
     public static WalkerState oppositeDirection(WalkerState top) {
         switch (top) {
@@ -85,12 +77,16 @@ public class MazeWalker {
         }
     }
 
+    /**
+     * Takes a step toward reaching the given destination from the given current
+     * location, and returns either the direction of the next step, whether or
+     * not that destination has been reached, or whether that destination is
+     * impossible to reach.
+     */
     public WalkerState areWeThereYet(int currentX, int currentY) {
-        // TODO: Implement me!
         breadCrumbs[currentX][currentY] = true;
         if (currentX == this.cheeseX && currentY == this.cheeseY) {
-            return WalkerState.THERE_ALREADY;
-        
+            return WalkerState.THERE_ALREADY;      
         } else if (this.maze.getLocation(currentX, currentY).getAbove().isOpen() &&
             !this.breadCrumbs[currentX][currentY - 1]) {
             return this.pathStack.pushDirection(WalkerState.MOVE_UP);
@@ -115,7 +111,6 @@ public class MazeWalker {
      * assigned maze.
      */
     public boolean[][] getBreadCrumbs() {
-        // TODO: Implement me!
         return this.breadCrumbs;
     }
 
@@ -123,7 +118,6 @@ public class MazeWalker {
      * Returns the current path taken by the walker.
      */
     public PathStack getCurrentPath() {
-        //TODO: Implement me!
         return this.pathStack;
     }
 
@@ -136,10 +130,8 @@ public class MazeWalker {
         /**
          * Creates a new PathStack object with the given
          * Maximum capacity.
-         */
-        
+         */        
         private int topOfStack;
-
         public PathStack(int maxCapacity) {
             // TODO: Implement me!
             this.stack = new WalkerState[maxCapacity];
@@ -151,7 +143,6 @@ public class MazeWalker {
          * returns the direction.
          */
         private WalkerState[] stack;
-
         public WalkerState pushDirection(WalkerState direction) {
             topOfStack++;
             stack[topOfStack] = direction;    
@@ -163,7 +154,6 @@ public class MazeWalker {
          * If the stack is empty, throws an IllegalArgumentException.
          */
         public WalkerState popDirection() {
-            // TODO: Implement me!
             if (this.isEmpty()) {
                 throw new IllegalArgumentException("Stack is empty");
             }
@@ -176,7 +166,6 @@ public class MazeWalker {
          * Returns true of the PathStack has no directions.
          */
         public boolean isEmpty() {
-            // TODO: Implement me!
             return topOfStack == -1;
         }
 
@@ -185,7 +174,6 @@ public class MazeWalker {
          * null values if necessary.
          */
         public WalkerState[] toArray() {
-            // TODO: Implement me!
             WalkerState[] newStack = new WalkerState[topOfStack + 1];
             for (int i = 0; i <= topOfStack; i++) {
                 newStack[i] = stack[i];
